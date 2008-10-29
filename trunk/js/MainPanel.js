@@ -1,3 +1,11 @@
+/*
+ * Jeebook store 1.0
+ * Copyright(c) 2008, Jeebook.com
+ * snaill@jeebook.com
+ * 
+ * http://www.jeebook.com
+ */
+
 Ext.app.MainPanel = function() {
 	  
   // create the Grid
@@ -6,47 +14,44 @@ Ext.app.MainPanel = function() {
   Ext.app.MainPanel.superclass.constructor.call(this, {
     region    : 'center',
     margins   : '3 3 3 0', 
-    layout : 'border',
+    layout    : 'border',
     defaults  : {
       autoScroll : true
     },
     tbar:new Ext.Toolbar([{
+      id:"btn_addDir",
       text:'添加目录',
       tooltip: {title:'添加目录',text:'在当前目录下添加子目录'},
   //    iconCls: 'tabs',
-      handler: this.onItemClick,
+      enableToggle : true,
+      handler: this.onAddDir,
       scope:this
-    }, '-', {
+    }, '-', 
+    {
+      id:"btn_addFile",
       text:'添加文件',
       tooltip: {title:'添加文件',text:'上传文件到当前目录'},
   //    iconCls: 'tabs',
-      handler: this.onAddClick,
+      enableToggle : true,
+      handler: this.onAddFile,
       scope:this
     }]),
-    items     : [this.grid, {
-                id:'bottom-preview',
-                layout:'fit',
-                height: 250,
-                split: true,
-                border:false,
-                hidden:true,
-                region:'south'
-            }]
+    items   : [this.grid, 
+              new Ext.app.ContentPanel()
+    ]
   });
 };
 
 Ext.extend(Ext.app.MainPanel, Ext.Panel, {
-  onItemClick : function(item){
-    var bot = Ext.getCmp('bottom-preview');
-    bot.add({html:'<p>this is a test!</p>'});
-    bot.show();
-    bot.ownerCt.doLayout();
+  onAddDir : function(item){
+    var bot = Ext.getCmp('bottom-panel');
+    bot.showPanel( "AddDir", Ext.getCmp('btn_addDir') );
+    
+    var msg = Ext.getCmp('message-panel');
+    msg.showMessage("add dir success!");
   },
-  onAddClick : function(item){
-    var bot = Ext.getCmp('bottom-preview');
-    bot.add(new Ext.app.AddFilePanel());
-    bot.show();
-    bot.ownerCt.doLayout();
+  onAddFile : function(item){
+    var bot = Ext.getCmp('bottom-panel');
+    bot.showPanel( "AddFile", Ext.getCmp('btn_addFile') );
   }
-
-} );
+});

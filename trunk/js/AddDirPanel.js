@@ -6,12 +6,10 @@
  * http://www.jeebook.com
  */
 
-Ext.app.AddFilePanel = function() {
+Ext.app.AddDirPanel = function() {
 
-  Ext.app.AddFilePanel.superclass.constructor.call(this, {
-        fileUpload: true,
+  Ext.app.AddDirPanel.superclass.constructor.call(this, {
         frame: true,
-        title: 'File Upload Form',
         autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 50,
@@ -24,15 +22,8 @@ Ext.app.AddFilePanel = function() {
             xtype: 'textfield',
             fieldLabel: 'Name'
         },{
-            xtype: 'fileuploadfield',
-            id: 'form-file',
-            emptyText: 'Select an image',
-            fieldLabel: 'Photo',
-            name: 'photo-path',
-            buttonCfg: {
-                text: '',
-                iconCls: 'upload-icon'
-            }
+            xtype: 'textfield',
+            fieldLabel: 'Name'
         }],
         buttons: [{
             text: 'Save',
@@ -56,4 +47,4 @@ Ext.app.AddFilePanel = function() {
     });
 };
 
-Ext.extend(Ext.app.AddFilePanel, Ext.FormPanel, {} );
+Ext.extend(Ext.app.AddDirPanel, Ext.FormPanel, {} );
