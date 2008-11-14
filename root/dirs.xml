@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="gb2312" ?>
 <dirs>
-	<dir name="aaa"/>
+	<dir name="test"/>
+	<dir name="test2"/>
 </dirs>
