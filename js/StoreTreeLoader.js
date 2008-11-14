@@ -23,9 +23,10 @@ Ext.app.StoreTreeLoader = Ext.extend( Ext.tree.TreeLoader, {
     },
     requestData : function(node, callback){
         if(this.fireEvent("beforeload", this, node, callback) !== false){
+			var url = "." + node.getPath() + "/dirs.xml";
             this.transId = Ext.Ajax.request({
-                method:this.requestMethod,
-                url: "./root/dirs.xml",
+                method:'GET',
+                url: url,
                 success: this.handleResponse,
                 failure: this.handleFailure,
                 scope: this,
@@ -45,13 +46,14 @@ Ext.app.StoreTreeLoader = Ext.extend( Ext.tree.TreeLoader, {
     * Override this function for custom TreeNode node implementation
     */
     createNode : function( nodeDir ){
-		var nodeTree = 	new Ext.tree.AsyncTreeNode();
-		nodeTree.text = nodeDir.getAttribute("name");
-		return nodeTree;
+		var name = nodeDir.getAttribute("name");
+		return	new Ext.tree.AsyncTreeNode({
+			id : name,
+			text : name
+		});
     },
 
     processResponse : function(response, node, callback){
-alert("response.responseXML:"+response.responseXML);
         var doc = response.responseXML;
         try {
 			var root = doc.documentElement || doc;
@@ -59,7 +61,9 @@ alert("response.responseXML:"+response.responseXML);
 			node.beginUpdate();
 			for ( var i = 0; i < dirs.length; i ++ )
 			{
-				this.creatNode( dirs[i] );
+				var n = this.createNode( dirs[i] );
+				if ( n )
+					node.appendChild(n);
 			}
             node.endUpdate();
             if(typeof callback == "function"){
@@ -73,7 +77,6 @@ alert("response.responseXML:"+response.responseXML);
 	handleFailure : function(response){
         this.transId = false;
         var a = response.argument;
-alert("response.responseText"+response.responseText);
         this.fireEvent("loadexception", this, a.node, response);
         if(typeof a.callback == "function"){
             a.callback(this, a.node);
