@@ -9,10 +9,9 @@
 Ext.app.AddFilePanel = function() {
 
   Ext.app.AddFilePanel.superclass.constructor.call(this, {
+        title: 'File Upload Form',
         fileUpload: true,
         frame: true,
-        title: 'File Upload Form',
-        autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 50,
         defaults: {

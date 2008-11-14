@@ -10,7 +10,6 @@ Ext.app.AddDirPanel = function() {
 
   Ext.app.AddDirPanel.superclass.constructor.call(this, {
         frame: true,
-        autoHeight: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 50,
         defaults: {
