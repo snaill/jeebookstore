@@ -8,39 +8,40 @@
 
 Ext.app.AddFilePanel = function() {
 
-  Ext.app.AddFilePanel.superclass.constructor.call(this, {
-        title: 'File Upload Form',
-        fileUpload: true,
-        frame: true,
-        bodyStyle: 'padding: 10px 10px 0 10px;',
-        labelWidth: 50,
-        defaults: {
+	var title = 'Upload document to '+ Ext.getCmp('StoreTree_Id').getCurrentPath();
+	Ext.app.AddFilePanel.superclass.constructor.call(this, {
+		id 			: 'AddFilePanel_Id',
+        title		: title,
+        fileUpload	: true,
+        frame		: true,
+        bodyStyle	: 'padding: 10px 10px 0 10px;',
+        labelWidth	: 60,
+        defaults	: {
             anchor: '95%',
             allowBlank: false,
             msgTarget: 'side'
         },
-        items: [{
+        items		: [{
             xtype: 'textfield',
             fieldLabel: 'Name'
         },{
             xtype: 'fileuploadfield',
-            id: 'form-file',
-            emptyText: 'Select an image',
-            fieldLabel: 'Photo',
-            name: 'photo-path',
+            emptyText: 'Select a document',
+            fieldLabel: 'Document',
             buttonCfg: {
                 text: '',
                 iconCls: 'upload-icon'
             }
         }],
-        buttons: [{
-            text: 'Save',
+        buttons		: [{
+            text: 'Upload',
             handler: function(){
-                if(fp.getForm().isValid()){
-	                fp.getForm().submit({
-	                    url: 'file-upload.php',
-	                    waitMsg: 'Uploading your photo...',
-	                    success: function(fp, o){
+				var form = Ext.getCmp('AddFilePanel_Id').getForm();
+                if(form.isValid()){
+	                form.submit({
+	                    url: './ashx/adddoc.ashx',
+	                    waitMsg: 'Uploading your document...',
+	                    success: function(sender, o){
 	                        msg('Success', 'Processed file "'+o.result.file+'" on the server');
 	                    }
 	                });
@@ -49,7 +50,8 @@ Ext.app.AddFilePanel = function() {
         },{
             text: 'Reset',
             handler: function(){
-                fp.getForm().reset();
+				var form = Ext.getCmp('AddFilePanel_Id').getForm();
+                form.reset();
             }
         }]
     });

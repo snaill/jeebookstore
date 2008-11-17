@@ -9,6 +9,7 @@
 Ext.app.StoreTree = function() {
 	
 	Ext.app.StoreTree.superclass.constructor.call(this, {
+		id			: 'StoreTree_Id',
 		title       : 'Folders',
 		region      : 'west',
 		split       : true,
@@ -30,4 +31,11 @@ Ext.app.StoreTree = function() {
 	this.root.expand();
 };
 
-Ext.extend(Ext.app.StoreTree, Ext.tree.TreePanel, {} );
+Ext.extend(Ext.app.StoreTree, Ext.tree.TreePanel, {
+	getCurrentPath : function(){
+		var node = this.getSelectionModel().getSelectedNode();
+		if ( !node )
+			node = this.root;
+		return node.getPath();
+	}
+} );

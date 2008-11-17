@@ -8,7 +8,10 @@
 
 Ext.app.AddDirPanel = function() {
 
-  Ext.app.AddDirPanel.superclass.constructor.call(this, {
+	var title = 'Add folder to '+ Ext.getCmp('StoreTree_Id').getCurrentPath();
+	Ext.app.AddDirPanel.superclass.constructor.call(this, {
+		id : 'AddDirPanel_Id',
+		title: title,
         frame: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 50,
@@ -20,17 +23,15 @@ Ext.app.AddDirPanel = function() {
         items: [{
             xtype: 'textfield',
             fieldLabel: 'Name'
-        },{
-            xtype: 'textfield',
-            fieldLabel: 'Name'
         }],
         buttons: [{
-            text: 'Save',
+            text: 'Add',
             handler: function(){
-                if(fp.getForm().isValid()){
-	                fp.getForm().submit({
-	                    url: 'file-upload.php',
-	                    waitMsg: 'Uploading your photo...',
+				var form = Ext.getCmp('AddDirPanel_Id').getForm();
+                if(form.isValid()){
+	                form.submit({
+	                    url: './ashx/addfolder.ashx',
+	                    waitMsg: 'Creating new folder...',
 	                    success: function(fp, o){
 	                        msg('Success', 'Processed file "'+o.result.file+'" on the server');
 	                    }
@@ -40,7 +41,8 @@ Ext.app.AddDirPanel = function() {
         },{
             text: 'Reset',
             handler: function(){
-                fp.getForm().reset();
+				var form = Ext.getCmp('AddDirPanel_Id').getForm();
+                form.reset();
             }
         }]
     });
