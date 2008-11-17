@@ -20,8 +20,8 @@ Ext.app.MainPanel = function() {
 		},
 		tbar:new Ext.Toolbar([{
 			id:"btn_addDir",
-			text:'添加目录',
-			tooltip: {title:'添加目录',text:'在当前目录下添加子目录'},
+			text:'Add folder',
+			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			//    iconCls: 'tabs',
 			pressed : true,
 			enableToggle : true,
@@ -30,8 +30,8 @@ Ext.app.MainPanel = function() {
 		}, '-', 
 		{
 			id:"btn_addFile",
-			text:'添加文件',
-			tooltip: {title:'添加文件',text:'上传文件到当前目录'},
+			text:'Add Document',
+			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
 			pressed : true,
 			//    iconCls: 'tabs',
 			enableToggle : true,
@@ -46,14 +46,14 @@ Ext.app.MainPanel = function() {
 
 Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 	onAddDir : function(item){
-		var bot = Ext.getCmp('bottom-panel');
+		var bot = Ext.getCmp('ContentPanel_Id');
 		bot.showPanel( "AddDir", Ext.getCmp('btn_addDir') );
 		
 		var msg = Ext.getCmp('message-panel');
 		msg.showMessage("add dir success!");
 	},
 	onAddFile : function(item){
-		var bot = Ext.getCmp('bottom-panel');
+		var bot = Ext.getCmp('ContentPanel_Id');
 		bot.showPanel( "AddFile", Ext.getCmp('btn_addFile') );
 	}
 });
