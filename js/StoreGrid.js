@@ -25,15 +25,17 @@ Ext.app.StoreGrid = function() {
 
 Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	load : function(path)	{
-		this.store.removeAll();
-		
 		var url = "." + path + "/docs.xml";
 		var conn = new Ext.data.Connection({
 			url : url
 		});
 	
 		this.store.proxy = new Ext.data.HttpProxy( conn );
+		this.store.proxy.on('loadexception', this.onLoadException, this );
 		this.store.reload();
+	},
+	onLoadException : function( o, options, response, e )	{
+		this.store.removeAll();
 	},
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);
