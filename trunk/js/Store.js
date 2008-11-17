@@ -19,7 +19,9 @@ Ext.app.StorePanel = function() {
 		items    : [this.tree, this.main]
 	});
 
+
     this.tree.on('click', this.onSelectTreeNode, this );
+	this.onSelectTreeNode( this.tree.root );
 };
 
 Ext.extend(Ext.app.StorePanel, Ext.Panel, {
