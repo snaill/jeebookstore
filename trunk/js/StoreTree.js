@@ -37,5 +37,11 @@ Ext.extend(Ext.app.StoreTree, Ext.tree.TreePanel, {
 		if ( !node )
 			node = this.root;
 		return node.getPath();
+	},
+	refresh : function(){
+		var node = this.getSelectionModel().getSelectedNode();
+		if ( !node )
+			node = this.root;
+		node.reload();
 	}
 } );
