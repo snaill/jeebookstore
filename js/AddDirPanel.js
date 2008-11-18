@@ -8,7 +8,8 @@
 
 Ext.app.AddDirPanel = function() {
 
-	var title = 'Add folder to '+ Ext.getCmp('StoreTree_Id').getCurrentPath();
+	var path = Ext.getCmp('StoreTree_Id').getCurrentPath();
+	var title = 'Add folder to '+ path;
 	Ext.app.AddDirPanel.superclass.constructor.call(this, {
 		id : 'AddDirPanel_Id',
 		title: title,
@@ -21,19 +22,28 @@ Ext.app.AddDirPanel = function() {
             msgTarget: 'side'
         },
         items: [{
+            xtype: 'hidden',
+			hidden  : true,
+			name : 'Path',
+			value : path
+        },{
             xtype: 'textfield',
-            fieldLabel: 'Name'
+            fieldLabel: 'Name',
+			name : 'Name'
         }],
         buttons: [{
-            text: 'Add',
+            text: 'Create',
             handler: function(){
 				var form = Ext.getCmp('AddDirPanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
 	                    url: './ashx/addfolder.ashx',
 	                    waitMsg: 'Creating new folder...',
-	                    success: function(fp, o){
-	                        msg('Success', 'Processed file "'+o.result.file+'" on the server');
+	                    success: function(sender, o){
+							Ext.getCmp('StoreTree_Id').refresh();
+									
+							var msg = Ext.getCmp('message-panel');
+							msg.showMessage(o.result);
 	                    }
 	                });
                 }
