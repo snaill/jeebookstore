@@ -23,7 +23,7 @@ Ext.app.MainPanel = function() {
 			text:'Add folder',
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			//    iconCls: 'tabs',
-			pressed : true,
+	//		pressed : true,
 			enableToggle : true,
 			handler: this.onAddDir,
 			scope:this
@@ -32,7 +32,7 @@ Ext.app.MainPanel = function() {
 			id:"btn_addFile",
 			text:'Add Document',
 			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
-			pressed : true,
+	//		pressed : true,
 			//    iconCls: 'tabs',
 			enableToggle : true,
 			handler: this.onAddFile,
