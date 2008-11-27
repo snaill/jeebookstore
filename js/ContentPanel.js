@@ -55,7 +55,7 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 		}
 		else if ( this.actionButton != null )
 		{
-			this.actionButton.toggle( true );
+			this.actionButton.toggle( false );
 		}
 
 		// create new panel

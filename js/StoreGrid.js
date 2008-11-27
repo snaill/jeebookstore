@@ -7,18 +7,26 @@
  */
 
 Ext.app.StoreGrid = function() {
+    var expander = new Ext.grid.RowExpander({
+        tpl : new Ext.Template(
+            '<p><b>Company:</b> {name}</p><br>',
+            '<p><b>Summary:</b> {time}</p>'
+        )
+    });
 
 	Ext.app.StoreGrid.superclass.constructor.call(this, {
 		store: new Ext.data.Store({
 			reader: new Ext.app.StoreGridReader()
 		}),
 		columns: [
+			expander,
 			{header: "Name", width: 160, sortable: true, dataIndex: 'name'},
 			{header: "Size", width: 75, sortable: true, renderer: this.formatSize, dataIndex: 'size', align : 'right' },
 			{header: "Upload time", width: 85, sortable: true, dataIndex: 'time'}
 		],
 		stripeRows: true,
 		border:false,
+		plugins: expander,
 		region:'center'
 	});
 };
