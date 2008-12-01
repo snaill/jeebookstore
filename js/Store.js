@@ -11,7 +11,7 @@ Ext.app.StorePanel = function() {
 	this.tree = new Ext.app.StoreTree();
 	this.main = new Ext.app.MainPanel();
 	Ext.app.StorePanel.superclass.constructor.call(this, {
-		height   : 450,
+		height   : 400,
 		autoWidth : true,
 		//  autoHeight : true,
 		plain    : true,
@@ -37,9 +37,9 @@ Ext.onReady(function(){
 	Ext.QuickTips.init();
 	Ext.state.Manager.setProvider( new Ext.state.SessionProvider( { state: Ext.appState } ) );
 			
-	var msgpanel = new Ext.app.MessagePanel();
-	msgpanel.render('msgbox');
+	new Ext.app.MessagePanel().render('msgbox');
 
-	var panel = new Ext.app.StorePanel();
-	panel.render('view');
+	new Ext.app.LoginPanel().render('loginbox');
+	
+	new Ext.app.StorePanel().render('view');
 });
