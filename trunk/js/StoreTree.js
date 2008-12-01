@@ -45,3 +45,7 @@ Ext.extend(Ext.app.StoreTree, Ext.tree.TreePanel, {
 		node.reload();
 	}
 } );
+
+Ext.app.StoreTree.getObj = function(){
+	return Ext.getCmp('StoreTree_Id');
+};

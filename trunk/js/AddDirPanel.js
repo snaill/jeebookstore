@@ -8,7 +8,7 @@
 
 Ext.app.AddDirPanel = function() {
 
-	var path = Ext.getCmp('StoreTree_Id').getCurrentPath();
+	var path = Ext.app.StoreTree.getObj().getCurrentPath();
 	var title = 'Add folder to '+ path;
 	Ext.app.AddDirPanel.superclass.constructor.call(this, {
 		id : 'AddDirPanel_Id',
