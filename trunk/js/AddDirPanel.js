@@ -40,8 +40,8 @@ Ext.app.AddDirPanel = function() {
 	                    url: './ashx/addfolder.ashx',
 	                    waitMsg: 'Creating new folder...',
 	                    success: function(sender, o){
-							Ext.getCmp('StoreTree_Id').refresh();
-									
+							Ext.app.StoreTree.getObj().refresh();
+
 							var msg = Ext.getCmp('message-panel');
 							msg.showMessage(o.result);
 	                    }

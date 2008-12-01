@@ -45,6 +45,20 @@ Ext.app.MainPanel = function() {
 };
 
 Ext.extend(Ext.app.MainPanel, Ext.Panel, {
+	updateToolButton : function( o, btn ){
+		if ( o.disabled != null )	{
+			btn.disabled = disabled;
+		}
+	},
+	updateToolbar : function( o ){
+		if ( o.addDir != null )	{
+			this.updateToolButton( o.addDir, Ext.getCmp('btn_addDir') ); 
+		}
+		
+		if ( o.addFile != null )	{
+			this.updateToolButton( o.addFile, Ext.getCmp('btn_addFile') ); 
+		}
+	},
 	onAddDir : function(item){
 		var bot = Ext.getCmp('ContentPanel_Id');
 		bot.showPanel( "AddDir", Ext.getCmp('btn_addDir') );
