@@ -8,7 +8,8 @@
 
 Ext.app.AddFilePanel = function() {
 
-	var title = 'Upload document to '+ Ext.getCmp('StoreTree_Id').getCurrentPath();
+	var path = Ext.app.StoreTree.getObj().getCurrentPath();
+	var title = 'Upload document to '+ path;
 	Ext.app.AddFilePanel.superclass.constructor.call(this, {
 		id 			: 'AddFilePanel_Id',
         title		: title,
@@ -22,12 +23,19 @@ Ext.app.AddFilePanel = function() {
             msgTarget: 'side'
         },
         items		: [{
+            xtype: 'hidden',
+			hidden  : true,
+			name : 'Path',
+			value : path
+        },{
             xtype: 'textfield',
-            fieldLabel: 'Name'
+            fieldLabel: 'Name',
+			name : 'Name',
         },{
             xtype: 'fileuploadfield',
             emptyText: 'Select a document',
             fieldLabel: 'Document',
+			name:'File',
             buttonCfg: {
                 text: '',
                 iconCls: 'upload-icon'
@@ -42,7 +50,8 @@ Ext.app.AddFilePanel = function() {
 	                    url: './ashx/adddoc.ashx',
 	                    waitMsg: 'Uploading your document...',
 	                    success: function(sender, o){
-	                        msg('Success', 'Processed file "'+o.result.file+'" on the server');
+							Ext.app.StoreGrid.getObj().refresh();
+	                    //    msg('Success', 'Processed file "'+o.result.file+'" on the server');
 	                    }
 	                });
                 }

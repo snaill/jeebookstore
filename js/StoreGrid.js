@@ -15,6 +15,7 @@ Ext.app.StoreGrid = function() {
     });
 
 	Ext.app.StoreGrid.superclass.constructor.call(this, {
+		id : 'StoreGrid_Id',
 		store: new Ext.data.Store({
 			reader: new Ext.app.StoreGridReader()
 		}),
@@ -47,5 +48,12 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	},
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);
+	},
+	refresh : function()	{
+		this.load( Ext.app.StoreTree.getObj().getCurrentPath() );
 	}
 });
+
+Ext.app.StoreGrid.getObj = function(){
+	return Ext.getCmp('StoreGrid_Id');
+};
