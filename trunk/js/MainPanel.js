@@ -65,9 +65,6 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 	onAddDir : function(item){
 		var bot = Ext.getCmp('ContentPanel_Id');
 		bot.showPanel( "AddDir", Ext.getCmp('btn_addDir') );
-		
-		var msg = Ext.getCmp('message-panel');
-		msg.showMessage("add dir success!");
 	},
 	onAddFile : function(item){
 		var bot = Ext.getCmp('ContentPanel_Id');

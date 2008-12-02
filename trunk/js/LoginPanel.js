@@ -15,9 +15,6 @@ Ext.app.LoginPanel = function() {
 		layoutConfig: {
 			columns: 2
 		},
-/* 		initialConfig :{
-			reader : new Ext.data.JsonReader()
-		}, */
 		items:[{
 			xtype: 'textfield',
             hideLabel: true,
@@ -28,7 +25,12 @@ Ext.app.LoginPanel = function() {
 			text : 'Login',
 			handler : this.onLogin,
 			scope :	this
-		})]
+		})],
+		keys: [{    
+			key:Ext.EventObject.ENTER,   
+			fn: this.onLogin,   
+			scope:this
+		}] 
 	});
 };
 
@@ -40,9 +42,16 @@ Ext.extend(Ext.app.LoginPanel, Ext.FormPanel, {
 					url: './ashx/login.ashx',
 					waitMsg: 'Login ...',
 					success: function(sender, o){
-						Ext.app.MainPanel.getObj().updateToolbar( o.result.data );
-					}
+						this.updateState( o.result.data );
+					},
+					scope : this
 				});
 			}
+	},
+	updateState : function( o )	{
+		Ext.app.UserState = o;
+		Ext.app.MainPanel.getObj().updateToolbar( o );
 	}
 });
+
+Ext.app.UserState = null;
