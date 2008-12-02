@@ -21,7 +21,7 @@ Ext.app.MainPanel = function() {
 		},
 		tbar:new Ext.Toolbar([new Ext.Action({
 			id:"btn_addDir",
-			text:'Add folder',
+			text: Ext.app.Resource.Toolbar.AddDir,
 			disabled : true,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			//    iconCls: 'tabs',
