@@ -41,9 +41,6 @@ Ext.app.AddDirPanel = function() {
 	                    waitMsg: 'Creating new folder...',
 	                    success: function(sender, o){
 							Ext.app.StoreTree.getObj().refresh();
-
-							var msg = Ext.getCmp('message-panel');
-							msg.showMessage(o.result);
 	                    }
 	                });
                 }
