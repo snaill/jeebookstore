@@ -9,7 +9,7 @@
 Ext.app.StoreGrid = function() {
     var expander = new Ext.grid.RowExpander({
         tpl : new Ext.Template(
-            '<p><b>Company:</b> {name}</p><br>',
+            '<p><a href="#" onclick="Ext.app.StoreGrid.Download(\'{id}\', \'{name}\')">Download</a></p><br>',
             '<p><b>Summary:</b> {time}</p>'
         )
     });
@@ -57,3 +57,7 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 Ext.app.StoreGrid.getObj = function(){
 	return Ext.getCmp('StoreGrid_Id');
 };
+
+Ext.app.StoreGrid.Download = function(id, name){
+	 window.location='ashx/Download.ashx?id=' + id + '&name=' + name;
+}
