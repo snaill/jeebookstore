@@ -12,32 +12,35 @@ Ext.app.MainPanel = function() {
 	this.grid = new Ext.app.StoreGrid();
 
 	Ext.app.MainPanel.superclass.constructor.call(this, {
+		id 		  : 'MainPanel_Id',
 		region    : 'center',
 		margins   : '3 3 3 0', 
 		layout    : 'border',
 		defaults  : {
 			autoScroll : true
 		},
-		tbar:new Ext.Toolbar([{
+		tbar:new Ext.Toolbar([new Ext.Action({
 			id:"btn_addDir",
 			text:'Add folder',
+			disabled : true,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			//    iconCls: 'tabs',
 	//		pressed : true,
 			enableToggle : true,
 			handler: this.onAddDir,
 			scope:this
-		}, '-', 
-		{
+		}), '-', 
+		new Ext.Action({
 			id:"btn_addFile",
 			text:'Add Document',
+			disabled : true,			
 			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
 	//		pressed : true,
 			//    iconCls: 'tabs',
 			enableToggle : true,
 			handler: this.onAddFile,
 			scope:this
-		}]),
+		})]),
 		items   : [this.grid, 
 				  new Ext.app.ContentPanel()
 		]
@@ -45,9 +48,9 @@ Ext.app.MainPanel = function() {
 };
 
 Ext.extend(Ext.app.MainPanel, Ext.Panel, {
-	updateToolButton : function( o, btn ){
+	updateToolButton : function( o, action ){
 		if ( o.disabled != null )	{
-			btn.disabled = disabled;
+			action.setDisabled(o.disabled);
 		}
 	},
 	updateToolbar : function( o ){
@@ -71,3 +74,7 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 		bot.showPanel( "AddFile", Ext.getCmp('btn_addFile') );
 	}
 });
+
+Ext.app.MainPanel.getObj = function(){
+	return Ext.getCmp('MainPanel_Id');
+};
