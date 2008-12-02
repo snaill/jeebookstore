@@ -36,13 +36,11 @@ Ext.extend(Ext.app.LoginPanel, Ext.FormPanel, {
 	onLogin : function() {
 		var form = this.getForm();
 			if(form.isValid()){
-				form.load({
+				form.submit({
 					url: './ashx/login.ashx',
-					waitMsg: 'Uploading your document...',
+					waitMsg: 'Login ...',
 					success: function(sender, o){
-						alert( o.result.addDir.disabled );
-						Ext.app.StoreGrid.getObj().refresh();
-					//    msg('Success', 'Processed file "'+o.result.file+'" on the server');
+						Ext.app.MainPanel.getObj().updateToolbar( o.result.data );
 					}
 				});
 			}
