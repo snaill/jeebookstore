@@ -43,12 +43,30 @@ Ext.app.StorePanel.getObj = function() {
 };
 
 Ext.BLANK_IMAGE_URL = '../extjs/resources/images/default/s.gif';
+Ext.app.Resource = new Object();
 
 Ext.onReady(function(){
 
 	Ext.QuickTips.init();
 	Ext.state.Manager.setProvider( new Ext.state.SessionProvider( { state: Ext.appState } ) );
-			
+	
+ 	var language;
+	if (navigator.appName == 'Netscape')
+		language = navigator.language;
+	else
+		language = navigator.browserLanguage;
+
+	if (language.indexOf('zh') > -1) 
+		Ext.app.Resource = Ext.app.zh_CN;
+	else
+		Ext.app.Resource = Ext.app.en_US; 
+	
+	/*var headerDom = document.getElementsByTagName('head').item(0);  
+    var jsDom = document.createElement('script');  
+    jsDom.type = 'text/javascript';  
+    jsDom.scr = 'lang/' + pack;  
+    headerDom.appendChild(jsDom);   */
+
 //	new Ext.app.MessagePanel().render('msgbox');
 	new Ext.StatusBar({
         id: 'Statusbar_Id',
