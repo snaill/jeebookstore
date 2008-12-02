@@ -19,6 +19,7 @@ Ext.app.StoreTree = function() {
 		collapsible : true,
 		margins     : '3 0 3 3',
 		cmargins    : '3 3 3 3',
+		autoScroll 	: true,
 		loader		: new Ext.app.StoreTreeLoader({
        		clearOnLoad:false
        	}),
