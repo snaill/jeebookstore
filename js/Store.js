@@ -76,6 +76,8 @@ Ext.onReady(function(){
 
 	new Ext.app.LoginPanel().render('loginbox');
 	
+	new Ext.app.Navigatebar().render('navbar');
+	
 	var panel = new Ext.app.StorePanel();
 	panel.render('view');
 	
