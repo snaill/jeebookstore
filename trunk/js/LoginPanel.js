@@ -18,11 +18,11 @@ Ext.app.LoginPanel = function() {
 		items:[{
 			xtype: 'textfield',
             hideLabel: true,
-            emptyText: 'Input your e-mail for login',
+            emptyText: Ext.app.Resource.EmptyText.LoginMail,
 			name:'email',
 			width:200
 		}, new Ext.Button({
-			text : 'Login',
+			text : Ext.app.Resource.Button.Login,
 			handler : this.onLogin,
 			scope :	this
 		})],
@@ -40,9 +40,17 @@ Ext.extend(Ext.app.LoginPanel, Ext.FormPanel, {
 			if(form.isValid()){
 				form.submit({
 					url: './ashx/login.ashx',
-					waitMsg: 'Login ...',
+					waitMsg: Ext.app.Resource.WaitMsg.Login,
 					success: function(sender, o){
 						this.updateState( o.result.data );
+						Ext.app.Navigatebar.getObj().setStatus( true, 'Login success!' );
+					},
+					failure : function(sender, o) {
+						Ext.app.StorePanel.getStatusbar().setStatus({
+                            text:'Login failure!', 
+                            iconCls:'',
+                            clear: true
+                        });						
 					},
 					scope : this
 				});

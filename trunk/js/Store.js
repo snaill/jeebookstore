@@ -14,13 +14,8 @@ Ext.app.StorePanel = function() {
 		id : 'StorePanel_Id',
 		height   : 400,
 		autoWidth : true,
-		//  autoHeight : true,
 		plain    : true,
 		layout   : 'border',
-/* 		bbar: new Ext.StatusBar({
-            id: 'Statusbar_Id',
-            defaultText: 'Ready'
-        }), */
 		items    : [this.tree, this.main]
 	});
 
@@ -32,9 +27,6 @@ Ext.app.StorePanel = function() {
 Ext.extend(Ext.app.StorePanel, Ext.Panel, {
 	onSelectTreeNode : function( node )	{
 		this.main.grid.load( node.getPath() );
-	},
-	getStatusbar : function() {
-		return Ext.getCmp('Statusbar_Id');
 	}
 } );
 
@@ -60,19 +52,6 @@ Ext.onReady(function(){
 		Ext.app.Resource = Ext.app.zh_CN;
 	else
 		Ext.app.Resource = Ext.app.en_US; 
-	
-	/*var headerDom = document.getElementsByTagName('head').item(0);  
-    var jsDom = document.createElement('script');  
-    jsDom.type = 'text/javascript';  
-    jsDom.scr = 'lang/' + pack;  
-    headerDom.appendChild(jsDom);   */
-
-//	new Ext.app.MessagePanel().render('msgbox');
-	new Ext.StatusBar({
-        id: 'Statusbar_Id',
-		hidden : true,
-        defaultText: 'Ready'
-    }).render('msgbox');
 
 	new Ext.app.LoginPanel().render('loginbox');
 	
