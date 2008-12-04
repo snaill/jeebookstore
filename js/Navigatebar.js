@@ -9,8 +9,12 @@
 Ext.app.Navigatebar = function() {
 
 	Ext.app.Navigatebar.superclass.constructor.call(this, {
-		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), '->',
-				{
+		id : 'Navigatebar_Id',
+		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), ' ', '-', ' ',
+				new Ext.StatusBar({
+					id: 'Statusbar_Id',
+					defaultText: ''
+				}),'->',{
 					id:"btn_mainSite",
 					text: Ext.app.Resource.Toolbar.MainSite,
 					handler: this.onMainSite,
@@ -39,6 +43,19 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 		window.location='http://www.jeebook.com/blog';				
 	},
 	onHelp : function()	{
+	},
+	setStatus : function( success, msg ) {
+		var s = Ext.getCmp('Statusbar_Id');
+		var cls = success ? 'x-status-success' : 'x-status-error';
+		s.setStatus({
+			text:msg, 
+			iconCls:cls,
+			clear: true
+        });
 	}
 });
+
+Ext.app.Navigatebar.getObj = function() {
+	return Ext.getCmp('Navigatebar_Id');
+}
 
