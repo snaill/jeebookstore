@@ -40,6 +40,11 @@ Ext.app.AddFilePanel = function() {
                 text: '',
                 iconCls: 'upload-icon'
             }
+        },{
+            xtype: 'textarea',
+            hideLabel: true,
+            name: 'msg',
+            anchor: '100% -53'  // anchor width by percentage and height by raw adjustment
         }],
         buttons		: [{
             text: 'Upload',

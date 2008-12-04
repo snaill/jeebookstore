@@ -24,8 +24,6 @@ Ext.app.MainPanel = function() {
 			text: Ext.app.Resource.Toolbar.AddDir,
 			disabled : true,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
-			//    iconCls: 'tabs',
-	//		pressed : true,
 			enableToggle : true,
 			handler: this.onAddDir,
 			scope:this
@@ -35,8 +33,24 @@ Ext.app.MainPanel = function() {
 			text:'Add Document',
 			disabled : true,			
 			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
-	//		pressed : true,
-			//    iconCls: 'tabs',
+			enableToggle : true,
+			handler: this.onAddFile,
+			scope:this
+		}), '-',
+		new Ext.Action({
+			id:'btn_rename',
+			text:'Rename',
+			disabled : true,			
+			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
+			enableToggle : true,
+			handler: this.onAddFile,
+			scope:this
+		}), '-',
+		new Ext.Action({
+			id:'btn_delete',
+			text:'Delete',
+			disabled : true,			
+			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
 			enableToggle : true,
 			handler: this.onAddFile,
 			scope:this
