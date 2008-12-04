@@ -7,7 +7,7 @@
  */
 
 Ext.app.StoreGrid = function() {
-    var expander = new Ext.grid.RowExpander({
+    this.expander = new Ext.grid.RowExpander({
         tpl : new Ext.Template(
             '<p><a href="#" onclick="Ext.app.StoreGrid.Download(\'{id}\', \'{name}\')">Download</a></p><br>',
             '<p><b>Summary:</b> {time}</p>'
@@ -20,16 +20,19 @@ Ext.app.StoreGrid = function() {
 			reader: new Ext.app.StoreGridReader()
 		}),
 		columns: [
-			expander,
+			this.expander,
 			{header: "Name", width: 160, sortable: true, dataIndex: 'name'},
 			{header: "Size", width: 75, sortable: true, renderer: this.formatSize, dataIndex: 'size', align : 'right' },
 			{header: "Upload time", width: 85, sortable: true, dataIndex: 'time'}
 		],
 		stripeRows: true,
 		border:false,
-		plugins: expander,
+		plugins: this.expander,
 		region:'center'
 	});
+
+	this.on('cellclick', this.onCellClick, this );
+	this.curRow = -1;
 };
 
 Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
@@ -45,6 +48,19 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	},
 	onLoadException : function( o, options, response, e )	{
 		this.store.removeAll();
+	},
+	onCellClick : function( grid, rowIndex, columnIndex, e ) {
+		if ( this.curRow > -1 )
+		{
+			this.expander.collapseRow( this.curRow );
+			this.curRow = -1;
+		}
+		
+		if ( 0 == columnIndex )
+			return;
+		
+		this.expander.expandRow( rowIndex );
+		this.curRow = rowIndex;
 	},
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);
