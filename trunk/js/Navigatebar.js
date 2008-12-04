@@ -7,22 +7,23 @@
  */
 
 Ext.app.Navigatebar = function() {
-	
-	var html = '<div style=\"text-align:left;float:left\">Store|<a href=\"#\">Blog</a></div>' +
-			'<div style=\"text-align:right\"><a href=\"#\">Return</a>|<a href=\"#\">Help</a></div>';
-		
+
 	Ext.app.Navigatebar.superclass.constructor.call(this, {
-//		id : 'Navigatebar_Id',
-//		height   : 400,
-			defaults: {
-		bodyStyle:'padding:15px 20px'
-	},
-		margins : '15, 0, 0, 15',
-		html: html,
-		autoWidth : true,
-		plain    : true
+		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), '->',
+				{
+					id:"btn_addDir",
+					text: Ext.app.Resource.Toolbar.AddDir,
+					handler: this.onAddDir,
+					scope:this
+				}, '-', 
+				{
+					id:"btn_addFile",
+					text:'Add Document',
+					handler: this.onAddFile,
+					scope:this
+				}, ' ']
 	});
 };
 
-Ext.extend(Ext.app.Navigatebar, Ext.Panel, {} );
+Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {} );
 
