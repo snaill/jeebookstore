@@ -13,18 +13,26 @@ Ext.app.StoreGrid = function() {
             '<p><b>Summary:</b> {time}</p>'
         )
     });
-
+	
+	var store = new Ext.data.Store({
+		reader: new Ext.app.StoreGridReader()
+	});
 	Ext.app.StoreGrid.superclass.constructor.call(this, {
 		id : 'StoreGrid_Id',
-		store: new Ext.data.Store({
-			reader: new Ext.app.StoreGridReader()
-		}),
+		store: store,
 		columns: [
 			this.expander,
 			{header: "Name", width: 160, sortable: true, dataIndex: 'name'},
 			{header: "Size", width: 75, sortable: true, renderer: this.formatSize, dataIndex: 'size', align : 'right' },
 			{header: "Upload time", width: 85, sortable: true, dataIndex: 'time'}
 		],
+		bbar : new Ext.PagingToolbar({
+			pageSize: 25,
+			store: store, 
+			displayInfo: true,
+			displayMsg: 'Displaying {0} - {1} of {2}',
+			emptyMsg: 'No data to display'
+		}),
 		stripeRows: true,
 		border:false,
 		plugins: this.expander,
@@ -37,7 +45,17 @@ Ext.app.StoreGrid = function() {
 
 Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	load : function(path)	{
-		var url = "." + path + "/docs.xml";
+		var url = 'ashx/GetFiles.ashx?path=' + path;
+		var conn = new Ext.data.Connection({
+			url : url
+		});
+	
+		this.store.proxy = new Ext.data.HttpProxy( conn );
+		this.store.proxy.on('loadexception', this.onLoadException, this );
+		this.store.reload();
+	},
+	search : function(path, key)	{
+		var url = 'ashx/Search.ashx?path=' + path + '&key=' + key;
 		var conn = new Ext.data.Connection({
 			url : url
 		});

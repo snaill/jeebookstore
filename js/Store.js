@@ -26,7 +26,7 @@ Ext.app.StorePanel = function() {
 
 Ext.extend(Ext.app.StorePanel, Ext.Panel, {
 	onSelectTreeNode : function( node )	{
-		this.main.grid.load( node.getPath() );
+		this.main.grid.load( Ext.app.StoreTree.getObj().getPath(node) );
 	}
 } );
 
