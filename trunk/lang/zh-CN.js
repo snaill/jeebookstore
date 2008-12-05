@@ -9,9 +9,12 @@ Ext.app.zh_CN.Toolbar.Help = '°ïÖú';
 
 Ext.app.zh_CN.EmptyText = new Object();
 Ext.app.zh_CN.EmptyText.LoginMail = 'ÊäÈëe-mailµÇÂ¼';
-
+Ext.app.zh_CN.EmptyText.SearchKey = 'ÇëÊäÈëËÑË÷¹Ø¼ü×Ö';
+	
 Ext.app.zh_CN.Button = new Object();
 Ext.app.zh_CN.Button.Login = 'µÇÂ¼';
+Ext.app.zh_CN.Button.Search = 'ËÑË÷';
 
 Ext.app.zh_CN.WaitMsg = new Object();
 Ext.app.zh_CN.WaitMsg.Login = 'µÇÂ¼ÖÐ ...';
+Ext.app.zh_CN.WaitMsg.Search = 'ËÑË÷ÖÐ ...';

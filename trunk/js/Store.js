@@ -19,7 +19,6 @@ Ext.app.StorePanel = function() {
 		items    : [this.tree, this.main]
 	});
 
-
     this.tree.on('click', this.onSelectTreeNode, this );
 	this.onSelectTreeNode( this.tree.root );
 };
@@ -53,7 +52,7 @@ Ext.onReady(function(){
 	else
 		Ext.app.Resource = Ext.app.en_US; 
 
-	new Ext.app.LoginPanel().render('loginbox');
+	new Ext.app.SearchPanel().render('loginbox');
 	
 	new Ext.app.Navigatebar().render('navbar');
 	
