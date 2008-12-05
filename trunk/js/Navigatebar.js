@@ -10,10 +10,10 @@ Ext.app.Navigatebar = function() {
 
 	Ext.app.Navigatebar.superclass.constructor.call(this, {
 		id : 'Navigatebar_Id',
-		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), ' ', '-', ' ',
+		items : [' ',
 				new Ext.StatusBar({
 					id: 'Statusbar_Id',
-					defaultText: ''
+					defaultText: 'Jeebook Store'
 				}),'->',{
 					id:"btn_mainSite",
 					text: Ext.app.Resource.Toolbar.MainSite,

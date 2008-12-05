@@ -12,28 +12,25 @@ Ext.app.StoreGridReader = function() {
     var recordType = [
 		{name: 'name'},
 		{name: 'size'},
-		{name: 'time'},
-		{name: 'id'	 }
+		{name: 'time'}//,
+		//{name: 'id'	 }
 	];
 
     Ext.app.StoreGridReader.superclass.constructor.call(this, meta, recordType);
 };
 
-Ext.extend(Ext.app.StoreGridReader, Ext.data.XmlReader, {
-    readRecords : function(doc){
-        var root = doc.documentElement || doc;
+Ext.extend(Ext.app.StoreGridReader, Ext.data.JsonReader, {
+    readRecords : function(o){
     	var recordType = this.recordType, fields = recordType.prototype.fields;
-    	var totalRecords = 0, success = true;
-
+    	var totalRecords = o.total, success = o.success;
     	var records = [];
-    	var ns = Ext.DomQuery.select("doc", root);
-        for(var i = 0, len = ns.length; i < len; i++) {
-	        var n = ns[i];
+        for(var i = 0, len = o.data.length; i < len; i++) {
+	        var n = o.data[i];
 	        var values = {};
 			
 	        for(var j = 0, jlen = fields.length; j < jlen; j++){
 	            var f = fields.items[j];
-	            values[f.name] = n.getAttribute(f.name);
+	            values[f.name] = n[f.name];
 	        }
 			
 	        var record = new recordType(values, null);

@@ -33,11 +33,16 @@ Ext.app.StoreTree = function() {
 };
 
 Ext.extend(Ext.app.StoreTree, Ext.tree.TreePanel, {
+	getPath : function( node ) {
+		var p = node.getPath() + '/';
+		// delete /root
+		return p.substring( 5 );
+	},
 	getCurrentPath : function(){
 		var node = this.getSelectionModel().getSelectedNode();
 		if ( !node )
 			node = this.root;
-		return node.getPath();
+		return this.getPath( node );
 	},
 	refresh : function(){
 		var node = this.getSelectionModel().getSelectedNode();
