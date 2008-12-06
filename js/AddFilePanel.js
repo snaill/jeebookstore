@@ -52,7 +52,7 @@ Ext.app.AddFilePanel = function() {
 				var form = Ext.getCmp('AddFilePanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
-	                    url: './ashx/adddoc.ashx',
+	                    url: './ashx/addFile.ashx',
 	                    waitMsg: 'Uploading your document...',
 	                    success: function(sender, o){
 							Ext.app.StoreGrid.getObj().refresh();

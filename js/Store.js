@@ -48,9 +48,9 @@ Ext.onReady(function(){
 		language = navigator.browserLanguage;
 
 	if (language.indexOf('zh') > -1) 
-		Ext.app.Resource = Ext.app.zh_CN;
+		Ext.app.Resource = new Ext.app.zh_CN();
 	else
-		Ext.app.Resource = Ext.app.en_US; 
+		Ext.app.Resource = new Ext.app.en_US(); 
 
 	new Ext.app.SearchPanel().render('loginbox');
 	

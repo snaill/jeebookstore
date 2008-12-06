@@ -1,10 +1,10 @@
-﻿<%@ WebHandler Language="C#" Class="AddDoc" %>
+﻿<%@ WebHandler Language="C#" Class="AddFile" %>
 
 using System;
 using System.Web;
 using Newtonsoft.Json;
 
-public class AddDoc : IHttpHandler {
+public class AddFile : IHttpHandler {
     
     public void ProcessRequest (HttpContext context) {
 
@@ -35,7 +35,7 @@ public class AddDoc : IHttpHandler {
         for (int i = 0; i < strPaths.Length; i++)
         {
             HttpPostedFile postedFile = context.Request.Files[i];
-            AddFile(doc, strPath, strName, strPaths[i], postedFile.ContentLength);
+            AddFileTo(doc, strPath, strName, strPaths[i], postedFile.ContentLength);
         }
 
 
@@ -45,7 +45,7 @@ public class AddDoc : IHttpHandler {
         context.Response.Flush();
     }
 
-    public void AddFile(System.Xml.XmlDocument doc, string strPath, string strDocName, string strId, int nlen)
+    public void AddFileTo(System.Xml.XmlDocument doc, string strPath, string strDocName, string strId, int nlen)
     {
         System.Xml.XmlElement elem = doc.CreateElement("doc");
 

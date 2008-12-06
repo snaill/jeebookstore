@@ -20,8 +20,8 @@ Ext.app.MainPanel = function() {
 			autoScroll : true
 		},
 		tbar:new Ext.Toolbar([new Ext.Action({
-			id:"btn_addDir",
-			text: Ext.app.Resource.Toolbar.AddDir,
+			id:"btn_addFolder",
+			text: Ext.app.Resource.Toolbar.AddFolder,
 			disabled : true,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			enableToggle : true,
@@ -68,12 +68,20 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 		}
 	},
 	updateToolbar : function( o ){
-		if ( o.addDir != null )	{
-			this.updateToolButton( o.addDir, Ext.getCmp('btn_addDir') ); 
+		if ( o.addFolder != null )	{
+			this.updateToolButton( o.addFolder, Ext.getCmp('btn_addFolder') ); 
 		}
 		
 		if ( o.addFile != null )	{
 			this.updateToolButton( o.addFile, Ext.getCmp('btn_addFile') ); 
+		}
+				
+		if ( o.rename != null )	{
+			this.updateToolButton( o.rename, Ext.getCmp('btn_rename') ); 
+		}
+		
+		if ( o.delete != null )	{
+			this.updateToolButton( o.delete, Ext.getCmp('btn_delete') ); 
 		}
 	},
 	onAddDir : function(item){
