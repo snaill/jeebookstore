@@ -12,10 +12,10 @@ Ext.app.Navigatebar = function() {
 		id : 'Navigatebar_Id',
 		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), ' ', ' ',
 			{
+				id : 'LoginMail_Id',
 				xtype: 'textfield',
 				hideLabel: true,	
 				emptyText: Ext.app.Resource.EmptyText.LoginMail,
-				name:'email',
 				width:150
 			}, new Ext.Button({
 				text : Ext.app.Resource.Button.Login,
@@ -69,26 +69,26 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 			clear: true
         });
 	},
+	handleResponse : function(response)	{
+		var o = Ext.decode( response.responseText );
+		this.updateState( o.data );
+		this.setStatus( true, 'Login success!' );
+	},
+	handleFailure : function(response)	{
+		this.setStatus({
+			text:'Login failure!', 
+			iconCls:'',
+			clear: true
+		});						
+	},	
 	onLogin : function() {
-		var form = this.getForm();
-		if(form.isValid()){
-			form.submit({
-				url: './ashx/login.ashx',
-				waitMsg: Ext.app.Resource.WaitMsg.Login,
-				success: function(sender, o){
-					this.updateState( o.result.data );
-					this.setStatus( true, 'Login success!' );
-				},
-				failure : function(sender, o) {
-					Ext.app.StorePanel.getStatusbar().setStatus({
-						text:'Login failure!', 
-						iconCls:'',
-						clear: true
-					});						
-				},
-				scope : this
-			});
-		}
+		var url = './ashx/login.ashx?user=' + Ext.getCmp('LoginMail_Id').getValue() + '&psw=';
+		this.transId = Ext.Ajax.request({
+			url: url,
+			success: this.handleResponse,
+			failure: this.handleFailure,
+			scope: this//,
+		});
 	},
 	updateState : function( o )	{
 		Ext.app.UserState = o;

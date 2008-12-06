@@ -1,17 +1,17 @@
 /*
- * Jeebook store 1.0
+ * Jeebook Store 1.0
  * Copyright(c) 2008, Jeebook.com
  * snaill@jeebook.com
  * 
  * http://www.jeebook.com
  */
 
-Ext.app.AddDirPanel = function() {
+Ext.app.AddFolderPanel = function() {
 
 	var path = Ext.app.StoreTree.getObj().getCurrentPath();
 	var title = 'Add folder to '+ path;
-	Ext.app.AddDirPanel.superclass.constructor.call(this, {
-		id : 'AddDirPanel_Id',
+	Ext.app.AddFolderPanel.superclass.constructor.call(this, {
+		id : 'AddFolderPanel_Id',
 		title: title,
         frame: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
@@ -34,7 +34,7 @@ Ext.app.AddDirPanel = function() {
         buttons: [{
             text: 'Create',
             handler: function(){
-				var form = Ext.getCmp('AddDirPanel_Id').getForm();
+				var form = Ext.getCmp('AddFolderPanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
 	                    url: './ashx/addfolder.ashx',
@@ -48,11 +48,11 @@ Ext.app.AddDirPanel = function() {
         },{
             text: 'Reset',
             handler: function(){
-				var form = Ext.getCmp('AddDirPanel_Id').getForm();
+				var form = Ext.getCmp('AddFolderPanel_Id').getForm();
                 form.reset();
             }
         }]
     });
 };
 
-Ext.extend(Ext.app.AddDirPanel, Ext.FormPanel, {} );
+Ext.extend(Ext.app.AddFolderPanel, Ext.FormPanel, {} );
