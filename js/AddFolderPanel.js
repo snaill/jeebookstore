@@ -22,26 +22,34 @@ Ext.app.AddFolderPanel = function() {
             msgTarget: 'side'
         },
         items: [{
+			id : 'AddFolderPanel_Path_Id',
             xtype: 'hidden',
 			hidden  : true,
-			name : 'Path',
 			value : path
         },{
+			id : 'AddFolderPanel_Name_Id',
             xtype: 'textfield',
-            fieldLabel: 'Name',
-			name : 'Name'
+            fieldLabel: 'Name'
         }],
         buttons: [{
             text: 'Create',
             handler: function(){
+				var name = Ext.getCmp('AddFolderPanel_Name_Id').getValue();
+				var path = Ext.getCmp('AddFolderPanel_Path_Id').getValue();
+				var url = './ashx/addfolder.ashx?name=' + name + '&path=' + path;
 				var form = Ext.getCmp('AddFolderPanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
-	                    url: './ashx/addfolder.ashx',
+	                    url: url,
 	                    waitMsg: 'Creating new folder...',
 	                    success: function(sender, o){
 							Ext.app.StoreTree.getObj().refresh();
-	                    }
+							Ext.app.ContentPanel.getObj().clear();
+							Ext.app.Navigatebar.getObj().setStatus(true, 'Create folder success.');
+	                    },
+						failure:function(sender, o ) {
+							Ext.app.Navigatebar.getObj().setStatus(false, Ext.app.Error.getMessage( o.result.fault ) );
+						}
 	                });
                 }
             }

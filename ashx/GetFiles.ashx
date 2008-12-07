@@ -54,6 +54,8 @@ public class GetFiles : IHttpHandler
             jw.WriteValue(fi.Length);
             jw.WritePropertyName("time");
             jw.WriteValue(fi.CreationTime.ToShortDateString());
+            jw.WritePropertyName("url");
+            jw.WriteValue(context.Request.Url.PathAndQuery + strPath + fi.Name);
             jw.WriteEndObject();
         }
         jw.WriteEndArray();
@@ -69,8 +71,8 @@ public class GetFiles : IHttpHandler
         jw.WritePropertyName("fault");
         jw.WriteStartObject();
         jw.WritePropertyName("code");
-        jw.WriteValue(1);
-        if (msg != null || 0 < msg.Length)
+        jw.WriteValue(code);
+        if (msg != null && 0 < msg.Length)
         {
             jw.WritePropertyName("message");
             jw.WriteValue(msg);

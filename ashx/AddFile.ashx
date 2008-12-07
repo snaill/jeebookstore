@@ -5,106 +5,79 @@ using System.Web;
 using Newtonsoft.Json;
 
 public class AddFile : IHttpHandler {
-    
+
+    const int Error_Unknown = 0;
+    const int Error_Parameter = 1;
+    const int Error_PathNotExist = 2;
+    const int Error_LoginFailed = 3;
+    const int Error_FolderIsExisted = 4;
+    const int Error_FileIsExisted = 5;
+  
     public void ProcessRequest (HttpContext context) {
-
-        string[] strPaths = Upload(context);
-        if (null == strPaths)
+        string strName = context.Request.QueryString["name"];
+        string strPath = context.Request.QueryString["path"];
+        if (strName == null || 0 == strName.Length || strPath == null || 0 == strPath.Length)
         {
-            context.Response.Write("<xml>上传完成!</xml>");
-            context.Response.Flush();
+            SendFault(context.Response, Error_Parameter, null);
             return;
-        }
+        } 
         
-        string strName = context.Request.Form["Name"];
-        string strPath = context.Request.Form["Path"];
-        string docs = context.Server.MapPath("..") + strPath + "\\docs.xml";
-
-        System.Xml.XmlDocument doc = new System.Xml.XmlDocument();
-        if (System.IO.File.Exists(docs))
+        bool bRet = Upload(context, 0, context.Server.MapPath("../root") + strPath + strName );
+        if (bRet)
         {
-            doc.Load(docs);
+            JsonWriter jw = new JsonTextWriter(context.Response.Output);
+            jw.WriteStartObject();
+            jw.WritePropertyName("success");
+            jw.WriteValue(true);
+            jw.WriteEndObject();
         }
-        else
-        {
-            System.Xml.XmlElement elemRoot = doc.CreateElement("docs");
-            doc.AppendChild(elemRoot);
-        }
-
-        
-        for (int i = 0; i < strPaths.Length; i++)
-        {
-            HttpPostedFile postedFile = context.Request.Files[i];
-            AddFileTo(doc, strPath, strName, strPaths[i], postedFile.ContentLength);
-        }
-
-
-        doc.Save(docs);
-
-        context.Response.Write("<xml>上传失败,可能因为上传文件过大导致</xml>");
-        context.Response.Flush();
     }
 
-    public void AddFileTo(System.Xml.XmlDocument doc, string strPath, string strDocName, string strId, int nlen)
-    {
-        System.Xml.XmlElement elem = doc.CreateElement("doc");
-
-        System.Xml.XmlAttribute attr = doc.CreateAttribute("name");
-        attr.Value = strDocName;
-        elem.Attributes.Append(attr);
-
-        attr = doc.CreateAttribute("id");
-        attr.Value = strId;
-        elem.Attributes.Append(attr);
-        
-        attr = doc.CreateAttribute("time");
-        attr.Value = DateTime.Now.ToShortDateString();
-        elem.Attributes.Append(attr);
-        
-        attr = doc.CreateAttribute("size");
-        attr.Value = nlen.ToString();
-        elem.Attributes.Append(attr);
-
-        doc.DocumentElement.AppendChild(elem);
-    }
-
-    string[] Upload(HttpContext context)
+    bool Upload(HttpContext context, int index, string strPath)
     {
         try
         {
-            string saveFoler = context.Server.MapPath("../stack/");
-            string savePath, fileName;
-            string[] strPaths = new string[context.Request.Files.Count];
-            
-            //遍历File表单元素   
-            for (int iFile = 0; iFile < context.Request.Files.Count; iFile++)
+            HttpPostedFile postedFile = context.Request.Files[index];
+            string fileName = System.IO.Path.GetFileName(postedFile.FileName);
+            if (fileName != "")
             {
-                HttpPostedFile postedFile = context.Request.Files[iFile];
-                fileName = System.IO.Path.GetFileName(postedFile.FileName);
-                if (fileName != "")
+                string fileType = fileName.Substring(fileName.LastIndexOf("."));
+                string savePath = strPath + fileType;
+                //检查是否在服务器上已经存在用户上传的同名文件
+                if (System.IO.File.Exists(savePath))
                 {
-                    string fileType = fileName.Substring(fileName.LastIndexOf("."));
-                    string guid = Guid.NewGuid().ToString("N");
-                    string newName = guid + fileType;
-                    savePath = saveFoler + newName;
-                    //检查是否在服务器上已经存在用户上传的同名文件
-                    if (System.IO.File.Exists(savePath))
-                    {
-                        System.IO.File.Delete(savePath);
-                    }
-                    postedFile.SaveAs(savePath);
-                    strPaths[iFile] = guid;
+                    SendFault(context.Response, Error_FileIsExisted, null);
+                    return false;
                 }
+                postedFile.SaveAs(savePath);
             }
-
-            return strPaths;
+            return true;
         }
         catch (Exception ex)
         {
-            return null;
+            SendFault(context.Response, Error_Unknown, ex.Message);
+            return false;
         }
     }
     
+    public void SendFault(HttpResponse response, int code, string msg)
+    {
+        JsonWriter jw = new JsonTextWriter(response.Output);
+        jw.WriteStartObject();
+        jw.WritePropertyName("success");
+        jw.WriteValue(false);
+        jw.WritePropertyName("fault");
+        jw.WriteStartObject();
+        jw.WritePropertyName("code");
+        jw.WriteValue(code);
+        if (msg != null && 0 < msg.Length)
+        {
+            jw.WritePropertyName("message");
+            jw.WriteValue(msg);
+        }
+        jw.WriteEndObject();
+        jw.WriteEndObject();
+    }   
     public bool IsReusable {
         get {
             return false;

@@ -30,15 +30,15 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 
 		this.compId = null;
 		this.panelName = "";
-		this.actionButton = null;
 
-		this.hide();
-		this.ownerCt.doLayout();
-		
 		if ( this.actionButton != null )
 		{
-			this.actionButton.toggle( true );
+			this.actionButton.toggle( false );
+			this.actionButton = null;
 		}
+		
+		this.hide();
+		this.ownerCt.doLayout();
 	},
 	showPanel : function( panelName, actionButton ) {
 		// clear old state
@@ -60,10 +60,15 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 
 		// create new panel
 		var comp = null;
-		if ( panelName == "AddDir" )
-			comp = this.add(new Ext.app.AddDirPanel());
-		else if ( panelName == "AddFile" )
+		if ( panelName == 'AddFolder' )
+			comp = this.add(new Ext.app.AddFolderPanel());
+		else if ( panelName == 'AddFile' )
 			comp = this.add(new Ext.app.AddFilePanel());
+		else if ( panelName == 'Rename' )
+			comp = this.add(new Ext.app.AddFilePanel());
+		else if ( panelName == 'Delete' )
+			comp = this.add(new Ext.app.AddFilePanel());
+		
 		else
 		{
 			this.panelName = "";
@@ -80,3 +85,7 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 		this.ownerCt.doLayout();
 	}
 });
+
+Ext.app.ContentPanel.getObj = function(){
+	return Ext.getCmp('ContentPanel_Id');
+};
