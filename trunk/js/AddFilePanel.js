@@ -23,19 +23,18 @@ Ext.app.AddFilePanel = function() {
             msgTarget: 'side'
         },
         items		: [{
+			id 	: 'AddFilePanel_Path_Id',
             xtype: 'hidden',
 			hidden  : true,
-			name : 'Path',
 			value : path
         },{
+			id 	: 'AddFilePanel_Name_Id',
             xtype: 'textfield',
-            fieldLabel: 'Name',
-			name : 'Name',
+            fieldLabel: 'Name'
         },{
             xtype: 'fileuploadfield',
             emptyText: 'Select a document',
             fieldLabel: 'Document',
-			name:'File',
             buttonCfg: {
                 text: '',
                 iconCls: 'upload-icon'
@@ -49,15 +48,22 @@ Ext.app.AddFilePanel = function() {
         buttons		: [{
             text: 'Upload',
             handler: function(){
+				var name = Ext.getCmp('AddFilePanel_Name_Id').getValue();
+				var path = Ext.getCmp('AddFilePanel_Path_Id').getValue();
+				var url = './ashx/addFile.ashx?name=' + name + '&path=' + path;
 				var form = Ext.getCmp('AddFilePanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
-	                    url: './ashx/addFile.ashx',
+	                    url: url,
 	                    waitMsg: 'Uploading your document...',
-	                    success: function(sender, o){
+						success: function(sender, o){
 							Ext.app.StoreGrid.getObj().refresh();
-	                    //    msg('Success', 'Processed file "'+o.result.file+'" on the server');
-	                    }
+							Ext.app.ContentPanel.getObj().clear();
+							Ext.app.Navigatebar.getObj().setStatus(true, 'Create folder success.');
+	                    },
+						failure:function(sender, o ) {
+							Ext.app.Navigatebar.getObj().setStatus(false, Ext.app.Error.getMessage( o.result.fault ) );
+						}
 	                });
                 }
             }

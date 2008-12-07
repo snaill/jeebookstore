@@ -36,7 +36,7 @@ public class Login : IHttpHandler
             jw.WriteStartObject();
                 WriteStateProperty(jw, "addFolder", false);
                 WriteStateProperty(jw, "addFile", false);
-                WriteStateProperty(jw, "rename", false);
+                WriteStateProperty(jw, "rename", strUser == "snaill@jeebook.com" ? false : true);
                 WriteStateProperty(jw, "delete", strUser == "snaill@jeebook.com" ? false : true);
             jw.WriteEndObject();
        jw.WriteEndObject();
@@ -60,8 +60,8 @@ public class Login : IHttpHandler
         jw.WritePropertyName("fault");
         jw.WriteStartObject();
         jw.WritePropertyName("code");
-        jw.WriteValue(1);
-        if (msg != null || 0 < msg.Length)
+        jw.WriteValue(code);
+        if (msg != null && 0 < msg.Length)
         {
             jw.WritePropertyName("message");
             jw.WriteValue(msg);

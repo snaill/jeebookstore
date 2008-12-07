@@ -55,8 +55,8 @@ public class GetFolders : IHttpHandler
         jw.WritePropertyName("fault");
         jw.WriteStartObject();
         jw.WritePropertyName("code");
-        jw.WriteValue(1);
-        if (msg != null || 0 < msg.Length)
+        jw.WriteValue(code);
+        if (msg != null && 0 < msg.Length)
         {
             jw.WritePropertyName("message");
             jw.WriteValue(msg);

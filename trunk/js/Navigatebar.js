@@ -24,7 +24,7 @@ Ext.app.Navigatebar = function() {
 			}), ' ',
 			new Ext.StatusBar({
 				id: 'Statusbar_Id',
-				defaultText: ''
+				defaultText: 'Use guest@jeebook.com to login'
 			}),'->',{
 				id:"btn_mainSite",
 				text: Ext.app.Resource.Toolbar.MainSite,
@@ -87,7 +87,7 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 			url: url,
 			success: this.handleResponse,
 			failure: this.handleFailure,
-			scope: this//,
+			scope: this
 		});
 	},
 	updateState : function( o )	{

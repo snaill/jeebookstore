@@ -12,8 +12,8 @@ Ext.app.StoreGridReader = function() {
     var recordType = [
 		{name: 'name'},
 		{name: 'size'},
-		{name: 'time'}//,
-		//{name: 'id'	 }
+		{name: 'time'},
+		{name: 'url'}
 	];
 
     Ext.app.StoreGridReader.superclass.constructor.call(this, meta, recordType);

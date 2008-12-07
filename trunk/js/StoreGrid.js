@@ -9,8 +9,7 @@
 Ext.app.StoreGrid = function() {
     this.expander = new Ext.grid.RowExpander({
         tpl : new Ext.Template(
-            '<p><a href="#" onclick="Ext.app.StoreGrid.Download(\'{id}\', \'{name}\')">Download</a></p><br>',
-            '<p><b>Summary:</b> {time}</p>'
+            '<p><a href="{url}">Download this file.</a></p><br>'
         )
     });
 	

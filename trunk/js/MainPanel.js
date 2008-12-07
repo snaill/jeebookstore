@@ -20,39 +20,39 @@ Ext.app.MainPanel = function() {
 			autoScroll : true
 		},
 		tbar:new Ext.Toolbar([new Ext.Action({
-			id:"btn_addFolder",
+			id:'btn_addFolder',
 			text: Ext.app.Resource.Toolbar.AddFolder,
 			disabled : true,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			enableToggle : true,
-			handler: this.onAddDir,
+			handler: this.onAddFolder,
 			scope:this
 		}), '-', 
 		new Ext.Action({
-			id:"btn_addFile",
-			text:'Add Document',
+			id:'btn_addFile',
+			text:Ext.app.Resource.Toolbar.AddFile,
 			disabled : true,			
-			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
+			tooltip: {title:'Add document',text:'Upload document to current folder.'},
 			enableToggle : true,
 			handler: this.onAddFile,
 			scope:this
 		}), '-',
 		new Ext.Action({
 			id:'btn_rename',
-			text:'Rename',
+			text:Ext.app.Resource.Toolbar.Rename,
 			disabled : true,			
-			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
+			tooltip: {title:'Rname',text:'Rname current folder or document.'},
 			enableToggle : true,
-			handler: this.onAddFile,
+			handler: this.onRename,
 			scope:this
 		}), '-',
 		new Ext.Action({
 			id:'btn_delete',
-			text:'Delete',
+			text:Ext.app.Resource.Toolbar.Delete,
 			disabled : true,			
-			tooltip: {title:'Add Document',text:'Upload document to current folder.'},
+			tooltip: {title:'Delete',text:'Delete current folder or document.'},
 			enableToggle : true,
-			handler: this.onAddFile,
+			handler: this.onDelete,
 			scope:this
 		})]),
 		items   : [this.grid, 
@@ -84,14 +84,18 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 			this.updateToolButton( o.delete, Ext.getCmp('btn_delete') ); 
 		}
 	},
-	onAddDir : function(item){
-		var bot = Ext.getCmp('ContentPanel_Id');
-		bot.showPanel( "AddDir", Ext.getCmp('btn_addDir') );
+	onAddFolder : function(item){
+		Ext.app.ContentPanel.getObj().showPanel( 'AddFolder', Ext.getCmp('btn_addFolder') );
 	},
 	onAddFile : function(item){
-		var bot = Ext.getCmp('ContentPanel_Id');
-		bot.showPanel( "AddFile", Ext.getCmp('btn_addFile') );
-	}
+		Ext.app.ContentPanel.getObj().showPanel( 'AddFile', Ext.getCmp('btn_addFile') );
+	},
+	onRename : function(){
+		Ext.app.ContentPanel.getObj().showPanel( 'Rename', Ext.getCmp('btn_rename') );	
+	},
+	onRename : function(){
+		Ext.app.ContentPanel.getObj().showPanel( 'Delete', Ext.getCmp('btn_delete') );	
+	}	
 });
 
 Ext.app.MainPanel.getObj = function(){
