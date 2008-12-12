@@ -41,7 +41,7 @@ Ext.onReady(function(){
 	Ext.QuickTips.init();
 	Ext.state.Manager.setProvider( new Ext.state.SessionProvider( { state: Ext.appState } ) );
 	
- 	var language;
+/*  	var language;
 	if (navigator.appName == 'Netscape')
 		language = navigator.language;
 	else
@@ -49,7 +49,7 @@ Ext.onReady(function(){
 
 	if (language.indexOf('zh') > -1) 
 		Ext.app.Resource = new Ext.app.zh_CN();
-	else
+	else */
 		Ext.app.Resource = new Ext.app.en_US(); 
 
 	new Ext.app.SearchPanel().render('loginbox');
@@ -70,4 +70,9 @@ Ext.onReady(function(){
 	resizer.on('resize', function(){
 		panel.updateBox( panel.getSize() );
 	});
+	
+	setTimeout(function(){
+        Ext.get('loading').remove();
+        Ext.get('loading-mask').fadeOut({remove:true});
+    }, 250);
 });

@@ -80,9 +80,9 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 			this.updateToolButton( o.rename, Ext.getCmp('btn_rename') ); 
 		}
 		
-		if ( o.delete != null )	{
+/* 		if ( o.delete != null )	{
 			this.updateToolButton( o.delete, Ext.getCmp('btn_delete') ); 
-		}
+		} */
 	},
 	onAddFolder : function(item){
 		Ext.app.ContentPanel.getObj().showPanel( 'AddFolder', Ext.getCmp('btn_addFolder') );

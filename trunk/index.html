@@ -11,6 +11,12 @@
 	<script language="javascript" src="Store.js"></script>
 </head>
 <body>
+<div id="loading-mask" style=""></div>
+<div id="loading">
+    <div class="loading-indicator"><img src="images/loading.gif" width="32" height="32" style="margin-right:8px;float:left;vertical-align:top;"/>Jeebook Store<br /><span id="loading-msg">Loading...</span></div>
+
+</div>
+<div id='viewPort'>
   <table cellSpacing="0" cellPadding="0" width="100%" height="100%">
   	<tr>
 		<td><div id="navbar"/></td>
@@ -70,6 +76,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
       <td />
     </tr>
   </table>
+</div>  
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
