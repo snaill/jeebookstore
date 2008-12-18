@@ -5,36 +5,9 @@
  * 
  * http://www.jeebook.com
  */
-
-Ext.app.StorePanel = function() {
-
-	this.tree = new Ext.app.StoreTree();
-	this.main = new Ext.app.MainPanel();
-	Ext.app.StorePanel.superclass.constructor.call(this, {
-		id : 'StorePanel_Id',
-		height   : 400,
-		autoWidth : true,
-		plain    : true,
-		layout   : 'border',
-		items    : [this.tree, this.main]
-	});
-
-    this.tree.on('click', this.onSelectTreeNode, this );
-	this.onSelectTreeNode( this.tree.root );
-};
-
-Ext.extend(Ext.app.StorePanel, Ext.Panel, {
-	onSelectTreeNode : function( node )	{
-		this.main.grid.load( Ext.app.StoreTree.getObj().getPath(node) );
-	}
-} );
-
-Ext.app.StorePanel.getObj = function() {
-	return Ext.getCmp('StorePanel_Id');
-};
-
 Ext.BLANK_IMAGE_URL = '../extjs/resources/images/default/s.gif';
 Ext.app.Resource = new Object();
+Ext.app.UserState = null;
 
 Ext.onReady(function(){
 
@@ -52,25 +25,69 @@ Ext.onReady(function(){
 	else */
 		Ext.app.Resource = new Ext.app.en_US(); 
 
-	new Ext.app.SearchPanel().render('loginbox');
-	
-	new Ext.app.Navigatebar().render('navbar');
-	
-	var panel = new Ext.app.StorePanel();
-	panel.render('view');
-	
-	var resizer = new Ext.Resizable( panel.getEl(), {
-		width:panel.width,
-		height:panel.height,
-		minHeight:200,
-		handles: 's',
-		heightIncrement:5,
-		dynamic: true
+	var header = new Ext.Panel({
+		layout 	: 'border',
+		region : 'north',
+		height : 115,
+		items 	: [
+			new Ext.app.Navigatebar(),
+			{
+				region : 'west',
+				border : false,
+				width	: 180,
+				html : '<img src=\"images/logo.png\" />'
+			}, 
+			new Ext.Panel({
+				region	: 'east',
+				layout	: 'table',
+				width 	: 468,
+				border	: false,
+				layoutConfig: { 
+					columns: 1
+				},
+				items : [
+					{ 
+						border : false, 
+						height : 10 
+					}, {
+						border	: false,
+						width : 468,
+						height : 60, 
+						el : 'adbox'
+					},
+				]
+			}),
+			new Ext.Panel({
+				region	: 'center',
+				layout	: 'table',
+				border	: false,
+				layoutConfig: { 
+					columns: 1
+				},
+				items : [
+					{ 
+						border : false, 
+						height : 40 
+					}, 
+					new Ext.app.SearchPanel()
+				]
+			})
+		]
 	});
-	resizer.on('resize', function(){
-		panel.updateBox( panel.getSize() );
+
+	var tree = new Ext.app.StoreTree();
+	var main = new Ext.app.MainPanel();
+	tree.on('click', function( node ) {
+		main.grid.load( tree.getPath(node) );
+	}, this );
+
+	var viewport = new Ext.Viewport({
+		layout : 'border',
+		items : [ header, tree, main ]	
 	});
 	
+	viewport.doLayout();
+
 	setTimeout(function(){
         Ext.get('loading').remove();
         Ext.get('loading-mask').fadeOut({remove:true});

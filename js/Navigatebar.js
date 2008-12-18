@@ -10,6 +10,7 @@ Ext.app.Navigatebar = function() {
 
 	Ext.app.Navigatebar.superclass.constructor.call(this, {
 		id : 'Navigatebar_Id',
+		region : 'north',	
 		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), ' ', ' ',
 			{
 				id : 'LoginMail_Id',
@@ -99,5 +100,3 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 Ext.app.Navigatebar.getObj = function() {
 	return Ext.getCmp('Navigatebar_Id');
 }
-
-Ext.app.UserState = null;
