@@ -54,7 +54,7 @@ Ext.onReady(function(){
 						width : 468,
 						height : 60, 
 						el : 'adbox'
-					},
+					}
 				]
 			}),
 			new Ext.Panel({
