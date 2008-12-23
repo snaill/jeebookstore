@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary 如何安装/部署Jeebook Store
 
 = Introduction =
 
