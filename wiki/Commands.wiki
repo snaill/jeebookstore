@@ -1,0 +1,12 @@
+#summary One-sentence summary of this page.
+
+Jeebook Store Command是一个网络数据交互的接口集合，用于实现对Jeebook Store文档库的访问，命令包括：
+
+获取目录信息
+获取文件信息
+搜索
+登录
+...
+Jeebook Store Command通过HTTP POST指令发送数据，
+
+通过JSON处理返回数据。Asp.net可以使用JSON.net处理JSON数据.
