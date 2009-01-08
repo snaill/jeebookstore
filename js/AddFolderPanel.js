@@ -8,11 +8,9 @@
 
 Ext.app.AddFolderPanel = function() {
 
-	var path = Ext.app.StoreTree.getObj().getCurrentPath();
-	var title = 'Add folder to '+ path;
 	Ext.app.AddFolderPanel.superclass.constructor.call(this, {
 		id : 'AddFolderPanel_Id',
-		title: title,
+		title: 'AddFolderPanel',
         frame: true,
         bodyStyle: 'padding: 10px 10px 0 10px;',
         labelWidth: 50,
@@ -24,8 +22,7 @@ Ext.app.AddFolderPanel = function() {
         items: [{
 			id : 'AddFolderPanel_Path_Id',
             xtype: 'hidden',
-			hidden  : true,
-			value : path
+			hidden  : true
         },{
 			id : 'AddFolderPanel_Name_Id',
             xtype: 'textfield',
@@ -61,6 +58,25 @@ Ext.app.AddFolderPanel = function() {
             }
         }]
     });
+
+	this.updatePanel();
 };
 
-Ext.extend(Ext.app.AddFolderPanel, Ext.FormPanel, {} );
+Ext.extend(Ext.app.AddFolderPanel, Ext.FormPanel, {
+	onNotify : function( event ) {
+		if ( event.id != Ext.app.Event.FolderChanged )
+			return;
+		
+		this.updatePanel( event );
+	},
+	updatePanel : function( event ) {
+		var path = '';
+		if ( event != null )
+			path = Ext.app.StoreTree.getObj().getPath( event.node );
+		else
+			path = Ext.app.StoreTree.getObj().getCurrentPath();
+		
+		this.setTitle( 'Add folder to '+ path );
+		Ext.getCmp('AddFolderPanel_Path_Id').setValue( path );
+	}
+});

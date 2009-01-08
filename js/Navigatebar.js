@@ -11,22 +11,9 @@ Ext.app.Navigatebar = function() {
 	Ext.app.Navigatebar.superclass.constructor.call(this, {
 		id : 'Navigatebar_Id',
 		region : 'north',	
-		items : [' ', new Ext.form.Label({ text : 'Jeebook Store' }), ' ', ' ',
+		style : 'background:#FFFFFF',
+		items : [' ', 
 			{
-				id : 'LoginMail_Id',
-				xtype: 'textfield',
-				hideLabel: true,	
-				emptyText: Ext.app.Resource.EmptyText.LoginMail,
-				width:150
-			}, new Ext.Button({
-				text : Ext.app.Resource.Button.Login,
-				handler : this.onLogin,
-				scope :	this
-			}), ' ',
-			new Ext.StatusBar({
-				id: 'Statusbar_Id',
-				defaultText: 'Use guest@jeebook.com to login'
-			}),'->',{
 				id:"btn_mainSite",
 				text: Ext.app.Resource.Toolbar.MainSite,
 				handler: this.onMainSite,
@@ -36,6 +23,26 @@ Ext.app.Navigatebar = function() {
 				id:"btn_blogSite",
 				text:Ext.app.Resource.Toolbar.BlogSite,
 				handler: this.onBlogSite,
+				scope:this
+			}, '-', new Ext.StatusBar({
+				id: 'Statusbar_Id',
+				style : 'background:#FFFFFF;border:none',
+				defaultText: 'Use guest@jeebook.com to login'
+			}), '->', {
+				id : 'LoginMail_Id',
+				xtype: 'textfield',
+				hideLabel: true,	
+				emptyText: Ext.app.Resource.EmptyText.LoginMail,
+				width:150
+			}, new Ext.Button({
+				text : Ext.app.Resource.Button.Login,
+				handler : this.onLogin,
+				scope :	this
+			}), '-', 
+			{
+				id: 'btn_Code',
+				text:'ิดย๋',
+				handler: this.onCode,
 				scope:this
 			}, '-', 
 			{
@@ -58,6 +65,9 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 	},
 	onBlogSite : function()	{
 		window.location='http://www.jeebook.com/blog';				
+	},
+	onCode : function()	{
+		window.location='http://code.google.com/p/jeebookstore';						
 	},
 	onHelp : function()	{
 	},

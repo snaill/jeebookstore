@@ -5,7 +5,7 @@ Ext.app.zh_CN = function() {
 	this.Toolbar.AddFile = '添加文档';
 	this.Toolbar.Rename = '重命名';
 	this.Toolbar.Delete = '删除';
-	this.Toolbar.MainSite = '返回主站';
+	this.Toolbar.MainSite = '主站';
 	this.Toolbar.BlogSite = '博客';
 	this.Toolbar.Help = '帮助';
 	

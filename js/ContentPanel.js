@@ -9,7 +9,7 @@
 Ext.app.ContentPanel = function() {
   
 	this.compId = "";
-	this.panelName = "";
+	this.panel = null;
 	this.actionButton = null;
 
 	Ext.app.ContentPanel.superclass.constructor.call(this, {
@@ -24,12 +24,16 @@ Ext.app.ContentPanel = function() {
 };
 
 Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
+	onNotify : function( event )	{
+		if ( this.panel != null )
+			this.panel.onNotify( event );
+	},
 	clear : function()	{
 		// clear old state
 		this.remove(this.compId);
 
 		this.compId = null;
-		this.panelName = "";
+		this.panel = null;
 
 		if ( this.actionButton != null )
 		{
@@ -40,13 +44,13 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 		this.hide();
 		this.ownerCt.doLayout();
 	},
-	showPanel : function( panelName, actionButton ) {
+	showPanel : function( panel, actionButton ) {
 		// clear old state
 		this.remove(this.compId);
-		if ( this.panelName == panelName )
+		if ( this.panel != null && this.panel.id == panel.id )
 		{
 			this.compId = null;
-			this.panelName = "";
+			this.panel = null;
 			this.actionButton = null;
 
 			this.hide();
@@ -60,24 +64,17 @@ Ext.extend(Ext.app.ContentPanel, Ext.Panel, {
 
 		// create new panel
 		var comp = null;
-		if ( panelName == 'AddFolder' )
-			comp = this.add(new Ext.app.AddFolderPanel());
-		else if ( panelName == 'AddFile' )
-			comp = this.add(new Ext.app.AddFilePanel());
-		else if ( panelName == 'Rename' )
-			comp = this.add(new Ext.app.AddFilePanel());
-		else if ( panelName == 'Delete' )
-			comp = this.add(new Ext.app.AddFilePanel());
-		
-		else
+		if ( panel == null )
 		{
-			this.panelName = "";
+			this.panel = null;
 			return;
 		}
-
+			
+		comp = this.add(panel);
+		
 		//
 		this.compId = comp.id;
-		this.panelName = panelName;
+		this.panel = panel;
 		this.actionButton = actionButton;
 
 		//
