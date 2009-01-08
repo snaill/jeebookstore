@@ -22,7 +22,7 @@ Ext.app.MainPanel = function() {
 		tbar:new Ext.Toolbar([new Ext.Action({
 			id:'btn_addFolder',
 			text: Ext.app.Resource.Toolbar.AddFolder,
-			disabled : true,
+			disabled : false,
 			tooltip: {title:'Add folder',text:'Add sub folder to current path.'},
 			enableToggle : true,
 			handler: this.onAddFolder,
@@ -31,7 +31,7 @@ Ext.app.MainPanel = function() {
 		new Ext.Action({
 			id:'btn_addFile',
 			text:Ext.app.Resource.Toolbar.AddFile,
-			disabled : true,			
+			disabled : false,			
 			tooltip: {title:'Add document',text:'Upload document to current folder.'},
 			enableToggle : true,
 			handler: this.onAddFile,
@@ -62,6 +62,9 @@ Ext.app.MainPanel = function() {
 };
 
 Ext.extend(Ext.app.MainPanel, Ext.Panel, {
+	onNotify : function( event ){
+		Ext.app.ContentPanel.getObj().onNotify( event );
+	},
 	updateToolButton : function( o, action ){
 		if ( o.disabled != null )	{
 			action.setDisabled(o.disabled);
@@ -85,16 +88,16 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 		} */
 	},
 	onAddFolder : function(item){
-		Ext.app.ContentPanel.getObj().showPanel( 'AddFolder', Ext.getCmp('btn_addFolder') );
+		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFolderPanel(), Ext.getCmp('btn_addFolder') );
 	},
 	onAddFile : function(item){
-		Ext.app.ContentPanel.getObj().showPanel( 'AddFile', Ext.getCmp('btn_addFile') );
+		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFilePanel(), Ext.getCmp('btn_addFile') );
 	},
 	onRename : function(){
-		Ext.app.ContentPanel.getObj().showPanel( 'Rename', Ext.getCmp('btn_rename') );	
+		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFilePanel(), Ext.getCmp('btn_rename') );	
 	},
 	onRename : function(){
-		Ext.app.ContentPanel.getObj().showPanel( 'Delete', Ext.getCmp('btn_delete') );	
+		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFilePanel(), Ext.getCmp('btn_delete') );	
 	}	
 });
 

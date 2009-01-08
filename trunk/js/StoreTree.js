@@ -10,13 +10,14 @@ Ext.app.StoreTree = function() {
 	
 	Ext.app.StoreTree.superclass.constructor.call(this, {
 		id			: 'StoreTree_Id',
-		title       : 'Folders',
+	//	title       : 'Folders',
 		region      : 'west',
 		split       : true,
 		useArrows	: true,
         animate		: true,
 		width       : 200,
 		collapsible : true,
+		collapseMode:'mini',
 		margins     : '3 0 3 3',
 		cmargins    : '3 3 3 3',
 		autoScroll 	: true,
@@ -29,6 +30,15 @@ Ext.app.StoreTree = function() {
 		})
 	});
 
+	this.on('click', function( node ) {
+		Ext.app.StoreGrid.getObj().load( this.getPath(node) );
+		
+		var event = {};
+		event.id = Ext.app.Event.FolderChanged;
+		event.node = node;
+		Ext.app.MainPanel.getObj().onNotify( event );
+	}, this );
+	
 	this.root.expand();
 };
 

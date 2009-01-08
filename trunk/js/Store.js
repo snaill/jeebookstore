@@ -77,9 +77,6 @@ Ext.onReady(function(){
 
 	var tree = new Ext.app.StoreTree();
 	var main = new Ext.app.MainPanel();
-	tree.on('click', function( node ) {
-		main.grid.load( tree.getPath(node) );
-	}, this );
 
 	var viewport = new Ext.Viewport({
 		layout : 'border',

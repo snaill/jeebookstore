@@ -8,11 +8,9 @@
 
 Ext.app.AddFilePanel = function() {
 
-	var path = Ext.app.StoreTree.getObj().getCurrentPath();
-	var title = 'Upload document to '+ path;
 	Ext.app.AddFilePanel.superclass.constructor.call(this, {
 		id 			: 'AddFilePanel_Id',
-        title		: title,
+        title		: 'AddFilePanel',
         fileUpload	: true,
         frame		: true,
         bodyStyle	: 'padding: 10px 10px 0 10px;',
@@ -25,8 +23,7 @@ Ext.app.AddFilePanel = function() {
         items		: [{
 			id 	: 'AddFilePanel_Path_Id',
             xtype: 'hidden',
-			hidden  : true,
-			value : path
+			hidden  : true
         },{
 			id 	: 'AddFilePanel_Name_Id',
             xtype: 'textfield',
@@ -75,6 +72,25 @@ Ext.app.AddFilePanel = function() {
             }
         }]
     });
+	
+	this.updatePanel();
 };
 
-Ext.extend(Ext.app.AddFilePanel, Ext.FormPanel, {} );
+Ext.extend(Ext.app.AddFilePanel, Ext.FormPanel, {
+	onNotify : function( event ) {
+		if ( event.id != Ext.app.Event.FolderChanged )
+			return;
+		
+		this.updatePanel( event );
+	},
+	updatePanel : function( event ) {
+		var path = '';
+		if ( event != null )
+			path = Ext.app.StoreTree.getObj().getPath( event.node );
+		else
+			path = Ext.app.StoreTree.getObj().getCurrentPath();
+		
+		this.setTitle( 'Upload document to '+ path );
+		Ext.getCmp('AddFilePanel_Path_Id').setValue( path );
+	}
+} );
