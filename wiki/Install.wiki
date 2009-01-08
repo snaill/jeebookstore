@@ -1,1 +1,21 @@
 #summary 如何安装/部署Jeebook Store
+#labels Phase-Deploy,Phase-Support,Featured
+
+Jeebook Store后端使用asp.net，部署需要一个IIS的环境，最简单的是使用Visual Studio的ASP.NET Development Server。
+
+以下以Visual Studio为例讲述如何运行或调试Jeebook Store:
+
+  * 使用[http://tortoisesvn.net/downloads svn工具]下载所有的代码.
+
+  * 按照以下结构部署代码和extjs，并将所有代码放置在Store目录中.
+    * Jeebook Store
+      * extjs
+      * Store 
+ 注意：Jeebook Store并没有自带extjs，所以请自行[http://extjs.com 下载extjs]. 
+
+ * 使用Visual Studio以网站方式打开Jeebook Store目录
+
+ * 设置Store/index-debug.html为起始页，开始调试即可
+
+Jeebook Store源码中包括Debug和Release两个版本，它们共用css，ashx，图片。
+Relase版本地代码只包括index.html和Store.js两个文件，其中Store.js是所有js的合成版本，该文件并不会随时更新，需要使用该版本的请自行使用[http://code.google.com/p/mytools360/downloads/detail?name=JsMinSharp.exe&can=2&q=#makechanges JsMin#]合成该文件。
