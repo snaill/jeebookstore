@@ -39,7 +39,7 @@ Ext.app.AddFilePanel = function() {
         },{
             xtype: 'textarea',
             hideLabel: true,
-            name: 'msg',
+            name: 'remark',
             anchor: '100% -53'  // anchor width by percentage and height by raw adjustment
         }],
         buttons		: [{

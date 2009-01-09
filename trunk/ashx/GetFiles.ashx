@@ -47,16 +47,8 @@ public class GetFiles : IHttpHandler
         for (int i = nStart; i < nEnd; i++)
         {
             System.IO.FileInfo fi = fis[i];
-            jw.WriteStartObject();
-            jw.WritePropertyName("name");
-            jw.WriteValue(fi.Name);
-            jw.WritePropertyName("size");
-            jw.WriteValue(fi.Length);
-            jw.WritePropertyName("time");
-            jw.WriteValue(fi.CreationTime.ToShortDateString());
-            jw.WritePropertyName("url");
-            jw.WriteValue(context.Request.Url.PathAndQuery + strPath + fi.Name);
-            jw.WriteEndObject();
+            System.IO.StreamReader sr = new System.IO.StreamReader(fi.FullName);
+            jw.WriteRaw(sr.ReadToEnd());   
         }
         jw.WriteEndArray();
         jw.WriteEndObject();

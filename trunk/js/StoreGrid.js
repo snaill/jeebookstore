@@ -7,12 +7,7 @@
  */
 
 Ext.app.StoreGrid = function() {
-    this.expander = new Ext.grid.RowExpander({
-        tpl : new Ext.Template(
-            '<p><a href="{url}">Download this file.</a></p><br>'
-        )
-    });
-	
+
 	var store = new Ext.data.Store({
 		reader: new Ext.app.StoreGridReader()
 	});
@@ -20,11 +15,23 @@ Ext.app.StoreGrid = function() {
 		id : 'StoreGrid_Id',
 		store: store,
 		columns: [
-			this.expander,
-			{header: "Name", width: 160, sortable: true, dataIndex: 'name'},
+			{header: "Name", width: 160, sortable: true, renderer: this.renderName, dataIndex: 'name'},
 			{header: "Size", width: 75, sortable: true, renderer: this.formatSize, dataIndex: 'size', align : 'right' },
 			{header: "Upload time", width: 85, sortable: true, dataIndex: 'time'}
 		],
+		viewConfig: {
+            forceFit:true,
+            enableRowBody:true,
+            showPreview:true,
+            getRowClass : function(record, rowIndex, p, store){
+                if( this.showPreview && record.data.remark != null ){
+                    p.body = '<p>'+record.data.remark+'</p>';
+                    return 'x-grid3-row-expanded';
+                }
+                return 'x-grid3-row-collapsed';
+            }
+        },
+
 		bbar : new Ext.PagingToolbar({
 			pageSize: 25,
 			store: store, 
@@ -34,12 +41,10 @@ Ext.app.StoreGrid = function() {
 		}),
 		stripeRows: true,
 		border:false,
-		plugins: this.expander,
 		region:'center'
 	});
 
 	this.on('cellclick', this.onCellClick, this );
-	this.curRow = -1;
 };
 
 Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
@@ -67,18 +72,11 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 		this.store.removeAll();
 	},
 	onCellClick : function( grid, rowIndex, columnIndex, e ) {
-		if ( this.curRow > -1 )
-		{
-			this.expander.collapseRow( this.curRow );
-			this.curRow = -1;
-		}
-		
-		if ( 0 == columnIndex )
-			return;
-		
-		this.expander.expandRow( rowIndex );
-		this.curRow = rowIndex;
 	},
+	renderName : function(value, p, record) {
+		return String.format('<b><a href="ashx/showthread.php?path={1}" target="_blank">{0}</a></b>',
+            value, record.data.path);
+	},	
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);
 	},
