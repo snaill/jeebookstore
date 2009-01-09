@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Jeebook Store 1.0
  * Copyright(c) 2008, Jeebook.com
  * snaill@jeebook.com
