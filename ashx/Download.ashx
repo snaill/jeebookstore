@@ -49,7 +49,7 @@ public class Download : IHttpHandler {
                 }
                 _Response.AddHeader("Connection", "Keep-Alive");
                 _Response.ContentType = "application/octet-stream";
-                _Response.AddHeader("Content-Disposition","attachment;filename=" + HttpUtility.UrlEncode(_fileName,System.Text.Encoding.UTF8) );
+                _Response.AddHeader("Content-Disposition", "attachment;filename=" + _fileName);//HttpUtility.UrlEncode(_fileName, System.Text.Encoding.UTF8));
              
                 br.BaseStream.Seek(startBytes, SeekOrigin.Begin);
                 int maxCount = (int) Math.Floor((fileLength - startBytes) / pack) + 1;

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Jeebook store 1.0
  * Copyright(c) 2008, Jeebook.com
  * snaill@jeebook.com
@@ -41,7 +41,7 @@ Ext.app.Navigatebar = function() {
 			}), '-', 
 			{
 				id: 'btn_Code',
-				text:'Դ��',
+				text:'源码',
 				handler: this.onCode,
 				scope:this
 			}, '-', 

@@ -1,4 +1,4 @@
-Ext.app.en_US = function() {
+﻿Ext.app.en_US = function() {
 
 	this.Toolbar = {};
 	this.Toolbar.AddFolder = 'Add Folder';

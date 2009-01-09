@@ -1,30 +1,30 @@
-Ext.app.zh_CN = function() {
+ï»¿Ext.app.zh_CN = function() {
 
 	this.Toolbar = {};
-	this.Toolbar.AddFolder = 'Ìí¼ÓÄ¿Â¼';
-	this.Toolbar.AddFile = 'Ìí¼ÓÎÄµµ';
-	this.Toolbar.Rename = 'ÖØÃüÃû';
-	this.Toolbar.Delete = 'É¾³ı';
-	this.Toolbar.MainSite = 'Ö÷Õ¾';
-	this.Toolbar.BlogSite = '²©¿Í';
-	this.Toolbar.Help = '°ïÖú';
+	this.Toolbar.AddFolder = 'æ·»åŠ ç›®å½•';
+	this.Toolbar.AddFile = 'æ·»åŠ æ–‡æ¡£';
+	this.Toolbar.Rename = 'é‡å‘½å';
+	this.Toolbar.Delete = 'åˆ é™¤';
+	this.Toolbar.MainSite = 'ä¸»ç«™';
+	this.Toolbar.BlogSite = 'åšå®¢';
+	this.Toolbar.Help = 'å¸®åŠ©';
 	
 	this.EmptyText = {};
-	this.EmptyText.LoginMail = 'ÊäÈëe-mailµÇÂ¼';
-	this.EmptyText.SearchKey = 'ÇëÊäÈëËÑË÷¹Ø¼ü×Ö';
+	this.EmptyText.LoginMail = 'è¾“å…¥e-mailç™»å½•';
+	this.EmptyText.SearchKey = 'è¯·è¾“å…¥æœç´¢å…³é”®å­—';
 	
 	this.Button = {};
-	this.Button.Login = 'µÇÂ¼';
-	this.Button.Search = 'ËÑË÷';
+	this.Button.Login = 'ç™»å½•';
+	this.Button.Search = 'æœç´¢';
 	
 	this.WaitMsg = {};
-	this.WaitMsg.Login = 'µÇÂ¼ÖĞ ...';
-	this.WaitMsg.Search = 'ËÑË÷ÖĞ ...';
+	this.WaitMsg.Login = 'ç™»å½•ä¸­ ...';
+	this.WaitMsg.Search = 'æœç´¢ä¸­ ...';
 	
 	this.Error = {};
-	this.Error.Parameter = '²ÎÊı´íÎó';
-	this.Error.PathNotExist = 'Â·¾¶²»´æÔÚ';
-	this.Error.LoginFailed = 'µÇÂ¼Ê§°Ü';
-	this.Error.FolderIsExisted = 'Ä¿Â¼ÒÑ´æÔÚ';
-	this.Error.FileIsExisted = 'ÎÄ¼şÒÑ´æÔÚ';
+	this.Error.Parameter = 'å‚æ•°é”™è¯¯';
+	this.Error.PathNotExist = 'è·¯å¾„ä¸å­˜åœ¨';
+	this.Error.LoginFailed = 'ç™»å½•å¤±è´¥';
+	this.Error.FolderIsExisted = 'ç›®å½•å·²å­˜åœ¨';
+	this.Error.FileIsExisted = 'æ–‡ä»¶å·²å­˜åœ¨';
 };
