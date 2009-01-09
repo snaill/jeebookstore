@@ -13,7 +13,7 @@ Ext.app.StoreGridReader = function() {
 		{name: 'name'},
 		{name: 'size'},
 		{name: 'time'},
-		{name: 'path'},
+		{name: 'id'},
 		{name: 'remark'}
 	];
 

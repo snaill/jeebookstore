@@ -33,7 +33,7 @@ public class AddFile : IHttpHandler {
             string saveFilename = Guid.NewGuid().ToString() + fileType;
             string savePath = context.Server.MapPath("../stack/") + saveFilename;
             System.IO.FileStream fs = new System.IO.FileStream(context.Server.MapPath("../root") + strPath + strName, System.IO.FileMode.CreateNew);
-            JsonWriter jw = new JsonTextWriter(new System.IO.StreamWriter(fs));
+            JsonWriter jw = new JsonTextWriter(new System.IO.StreamWriter(fs, System.Text.Encoding.UTF8));
             jw.WriteStartObject();
             jw.WritePropertyName("name");
             jw.WriteValue(strName);
@@ -41,8 +41,8 @@ public class AddFile : IHttpHandler {
             jw.WriteValue(postedFile.ContentLength);
             jw.WritePropertyName("time");
             jw.WriteValue(DateTime.Now.ToString());
-            jw.WritePropertyName("path");
-            jw.WriteValue("/stack/" + saveFilename); 
+            jw.WritePropertyName("id");
+            jw.WriteValue(saveFilename); 
             jw.WritePropertyName("remark");
             jw.WriteValue(strRemark);
             jw.WriteEndObject();
