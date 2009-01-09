@@ -12,6 +12,7 @@ public class Download : IHttpHandler {
         string strName = context.Request.QueryString["name"];
        
         //
+        strName += strId.Substring(strId.LastIndexOf("."));
         ResponseFile( context.Request, context.Response, strName, context.Server.MapPath("../stack/") + strId, 1024000 );
         
         //
@@ -73,7 +74,6 @@ public class Download : IHttpHandler {
             finally
             {
                 br.Close();
-
                 myFile.Close();
             }
         }
@@ -83,6 +83,7 @@ public class Download : IHttpHandler {
         }
         return true;
     }
+    
     public bool IsReusable {
         get {
             return false;

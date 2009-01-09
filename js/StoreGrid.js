@@ -74,8 +74,8 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	onCellClick : function( grid, rowIndex, columnIndex, e ) {
 	},
 	renderName : function(value, p, record) {
-		return String.format('<b><a href="ashx/showthread.php?path={1}" target="_blank">{0}</a></b>',
-            value, record.data.path);
+		return String.format('<b><a href="ashx/Download.ashx?id={1}&name={2}">{0}</a></b>',
+            value, record.data.id, record.data.name);
 	},	
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);
