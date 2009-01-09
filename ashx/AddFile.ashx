@@ -16,21 +16,62 @@ public class AddFile : IHttpHandler {
     public void ProcessRequest (HttpContext context) {
         string strName = context.Request.QueryString["name"];
         string strPath = context.Request.QueryString["path"];
+        string strRemark = context.Request["remark"];
+       
         if (strName == null || 0 == strName.Length || strPath == null || 0 == strPath.Length)
         {
             SendFault(context.Response, Error_Parameter, null);
             return;
-        } 
-        
-        bool bRet = Upload(context, 0, context.Server.MapPath("../root") + strPath + strName );
-        if (bRet)
-        {
-            JsonWriter jw = new JsonTextWriter(context.Response.Output);
-            jw.WriteStartObject();
-            jw.WritePropertyName("success");
-            jw.WriteValue(true);
-            jw.WriteEndObject();
         }
+
+        try
+        {
+            // create json
+            HttpPostedFile postedFile = context.Request.Files[0];
+            string fileName = System.IO.Path.GetFileName(postedFile.FileName);
+            string fileType = fileName.Substring(fileName.LastIndexOf("."));
+            string saveFilename = Guid.NewGuid().ToString() + fileType;
+            string savePath = context.Server.MapPath("../stack/") + saveFilename;
+            System.IO.FileStream fs = new System.IO.FileStream(context.Server.MapPath("../root") + strPath + strName, System.IO.FileMode.CreateNew);
+            JsonWriter jw = new JsonTextWriter(new System.IO.StreamWriter(fs));
+            jw.WriteStartObject();
+            jw.WritePropertyName("name");
+            jw.WriteValue(strName);
+            jw.WritePropertyName("size");
+            jw.WriteValue(postedFile.ContentLength);
+            jw.WritePropertyName("time");
+            jw.WriteValue(DateTime.Now.ToString());
+            jw.WritePropertyName("path");
+            jw.WriteValue("/stack/" + saveFilename); 
+            jw.WritePropertyName("remark");
+            jw.WriteValue(strRemark);
+            jw.WriteEndObject();
+            jw.Close();
+            
+            //Upload
+            if (fileName != "")
+            {
+                //检查是否在服务器上已经存在用户上传的同名文件
+                if (System.IO.File.Exists(savePath))
+                {
+                    SendFault(context.Response, Error_FileIsExisted, null);
+                    return;
+                }
+                postedFile.SaveAs(savePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            SendFault(context.Response, Error_Unknown, ex.Message);
+            return;
+        }
+ 
+        
+        JsonWriter jw2 = new JsonTextWriter(context.Response.Output);
+        jw2.WriteStartObject();
+        jw2.WritePropertyName("success");
+        jw2.WriteValue(true);
+        jw2.WriteEndObject();
     }
 
     bool Upload(HttpContext context, int index, string strPath)
