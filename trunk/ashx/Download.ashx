@@ -47,10 +47,16 @@ public class Download : IHttpHandler {
                 {
                     //Response.AddHeader("Content-Range", string.Format(" bytes {0}-{1}/{2}", startBytes, fileLength-1, fileLength));
                 }
-                _Response.AddHeader("Connection", "Keep-Alive");
                 _Response.ContentType = "application/octet-stream";
-                _Response.AddHeader("Content-Disposition", "attachment;filename=" + _fileName);//HttpUtility.UrlEncode(_fileName, System.Text.Encoding.UTF8));
-             
+                _Response.Charset = "UTF-8";
+                _Response.AddHeader("Connection", "Keep-Alive");
+                
+                HttpBrowserCapabilities bc = HttpContext.Current.Request.Browser;
+                if ( bc.Browser == "IE" )
+                    _Response.AddHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(_fileName, System.Text.Encoding.UTF8));
+                else
+                    _Response.AddHeader("Content-Disposition", "attachment;filename=" + _fileName);
+                
                 br.BaseStream.Seek(startBytes, SeekOrigin.Begin);
                 int maxCount = (int) Math.Floor((fileLength - startBytes) / pack) + 1;
 
