@@ -49,7 +49,7 @@ Ext.app.StoreGrid = function() {
 
 Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	load : function(path)	{
-		var url = 'ashx/GetFiles.ashx?path=' + path;
+		var url = 'ashx/GetFiles.ashx?path=' + encodeURIComponent(path);
 		var conn = new Ext.data.Connection({
 			url : url
 		});
@@ -75,7 +75,7 @@ Ext.extend(Ext.app.StoreGrid, Ext.grid.GridPanel, {
 	},
 	renderName : function(value, p, record) {
 		return String.format('<b><a href="ashx/Download.ashx?id={1}&name={2}">{0}</a></b>',
-            value, record.data.id, record.data.name);
+            value, encodeURIComponent(record.data.id), encodeURIComponent(record.data.name));
 	},	
 	formatSize : function( size )	{
 		return Ext.util.Format.fileSize(size);

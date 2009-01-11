@@ -33,11 +33,13 @@ Ext.app.AddFolderPanel = function() {
             handler: function(){
 				var name = Ext.getCmp('AddFolderPanel_Name_Id').getValue();
 				var path = Ext.getCmp('AddFolderPanel_Path_Id').getValue();
-				var url = './ashx/addfolder.ashx?name=' + name + '&path=' + path;
+				var url = './ashx/addfolder.ashx';
 				var form = Ext.getCmp('AddFolderPanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
 	                    url: url,
+						params : { name : name, path : path },
+						method : 'GET',
 	                    waitMsg: 'Creating new folder...',
 	                    success: function(sender, o){
 							Ext.app.StoreTree.getObj().refresh();
