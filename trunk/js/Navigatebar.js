@@ -93,9 +93,12 @@ Ext.extend(Ext.app.Navigatebar, Ext.Toolbar, {
 		});						
 	},	
 	onLogin : function() {
-		var url = './ashx/login.ashx?user=' + Ext.getCmp('LoginMail_Id').getValue() + '&psw=';
+		var url = './ashx/login.ashx';
+		var user = Ext.getCmp('LoginMail_Id').getValue();
 		this.transId = Ext.Ajax.request({
 			url: url,
+			method : 'GET',
+			params : { user : user, psw : ''},
 			success: this.handleResponse,
 			failure: this.handleFailure,
 			scope: this

@@ -96,7 +96,7 @@ Ext.extend(Ext.app.MainPanel, Ext.Panel, {
 	onRename : function(){
 		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFilePanel(), Ext.getCmp('btn_rename') );	
 	},
-	onRename : function(){
+	onDelete : function(){
 		Ext.app.ContentPanel.getObj().showPanel( new Ext.app.AddFilePanel(), Ext.getCmp('btn_delete') );	
 	}	
 });

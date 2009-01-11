@@ -23,7 +23,8 @@ Ext.app.StoreTreeLoader = Ext.extend( Ext.tree.TreeLoader, {
     },
     requestData : function(node, callback){
         if(this.fireEvent("beforeload", this, node, callback) !== false){
-			var url = 'ashx/GetFolders.ashx?path=' + Ext.app.StoreTree.getObj().getPath( node );
+			var url = 'ashx/GetFolders.ashx';
+			var nodePath = Ext.app.StoreTree.getObj().getPath( node );
             this.transId = Ext.Ajax.request({
                 method:'GET',
                 url: url,
@@ -31,7 +32,7 @@ Ext.app.StoreTreeLoader = Ext.extend( Ext.tree.TreeLoader, {
                 failure: this.handleFailure,
                 scope: this,
                 argument: {callback: callback, node: node},
-                params: this.getParams(node)
+                params: { path : nodePath }
             });
         }else{
             // if the load is cancelled, make sure we notify

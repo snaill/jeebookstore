@@ -47,11 +47,13 @@ Ext.app.AddFilePanel = function() {
             handler: function(){
 				var name = Ext.getCmp('AddFilePanel_Name_Id').getValue();
 				var path = Ext.getCmp('AddFilePanel_Path_Id').getValue();
-				var url = './ashx/addFile.ashx?name=' + name + '&path=' + path;
+				var url = './ashx/addFile.ashx';
 				var form = Ext.getCmp('AddFilePanel_Id').getForm();
                 if(form.isValid()){
 	                form.submit({
 	                    url: url,
+						params : { name : name, path : path },
+						method : 'GET',
 	                    waitMsg: 'Uploading your document...',
 						success: function(sender, o){
 							Ext.app.StoreGrid.getObj().refresh();
