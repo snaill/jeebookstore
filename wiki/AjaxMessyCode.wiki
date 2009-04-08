@@ -1,4 +1,6 @@
+#summary ExtJs的Ajax乱码问题
 #labels ExtJs,Ajax,乱码
+
 之前一直用的英文做的测试都也没感觉有啥问题，上周末一上中文，乱码问题就骚扰了我一个周末。
 
 最开始是FormPanel发送的数据到ashx的时候出现乱码，Google了一下这样的问题还挺多，把所有js和html转存为UTF-8，然后把调用js的html设置为UTF-8编码，当然Asp的Request和Response保持默认的UTF-8，Firefox上就没有乱码的问题了。
