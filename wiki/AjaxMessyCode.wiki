@@ -1,0 +1,44 @@
+#labels ExtJs,Ajax,乱码
+之前一直用的英文做的测试都也没感觉有啥问题，上周末一上中文，乱码问题就骚扰了我一个周末。
+
+最开始是FormPanel发送的数据到ashx的时候出现乱码，Google了一下这样的问题还挺多，把所有js和html转存为UTF-8，然后把调用js的html设置为UTF-8编码，当然Asp的Request和Response保持默认的UTF-8，Firefox上就没有乱码的问题了。
+
+再试IE，发现FormPanel内的数据已经没有问题，但通过URL参数传递的中文还是不对。依次尝试使用escape，encodeURI，encodeURIComponent函数对URL进行编码，没有效果。
+
+多次试验下发现如果使用Form.submit函数的params属性来传递参数，并且method为GET时，IE下的表现就是正常的。如：
+
+URL: ashx/AddFile.ashx?name=中国&path=/中国
+
+Form.submit({
+
+    url : ‘ashx/AddFile.ashx’,
+
+    method : ‘GET’,
+
+    params : {
+
+        name : ‘中国',
+
+        path : ‘/中国';
+
+    }
+
+})
+
+检查Action.Submit类的代码，发现ExtJS会在submit时使用params来拼接成如上的URL，之所以没有出现乱码，是因为分别对每个值进行了编码，而编码用的函数正是encodeURIComponent，只不过不像我之前那样直接对整个URL调用而已。
+
+这番折腾又应了那句话，不合常理的问题往往是函数调用的问题。
+
+总算IE和Firefox都可以正确处理中文了，可事情还没完，下载文件的文件名在FireFox变乱码了，当然还不算太乱，只不过是%E7%E9之类的显示而已。
+
+检查发现我在返回文件名时，使用Server.UrlEncode对文件名做了UTF-8的编码，如果直接返回文件名则FireFox正常了，但IE同时变乱码，这次是彻底的乱码。貌似是因为FireFox对文件名的解析采用了ISOxxxx-1的编码而不是Http头中记录的编码类型。Google+研究了半天貌似没有好的解决办法，只好在ashx中做了浏览器的分支，即：
+
+HttpBrowserCapabilities bc = HttpContext.Current.Request.Browser;
+if ( bc.Browser == "IE" )
+    _Response.AddHeader("Content-Disposition", "attachment;filename=" + HttpUtility.UrlEncode(_fileName, System.Text.Encoding.UTF8));
+else
+    _Response.AddHeader("Content-Disposition", "attachment;filename=" + _fileName);
+
+代码很简单，但还是发生了点小插曲。因为采用ashx，context.Request中没有Browser的属性，必须采用HttpContext.Current.Request.Browser才能正常调用。
+
+总算最终尘埃落定，虽然还有FireFox下载文件名中包含;文件名会被截断之类的问题，不过留在下次再说吧
